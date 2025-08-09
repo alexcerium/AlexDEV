@@ -38,17 +38,25 @@
         <div class="hero-background"></div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">Alexander — iOS Developer</h1>
-                <p class="hero-subtitle">I create thoughtful and modern mobile applications</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary magnetic" onclick="downloadResume()">
-                        <span>Download Resume</span>
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
-                        <span>Contact Me</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
+                <div class="hero-text">
+                    <h1 class="hero-title">Alexander — iOS Developer</h1>
+                    <p class="hero-subtitle">I create thoughtful and modern mobile applications</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary magnetic" onclick="downloadResume()">
+                            <span>Download Resume</span>
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
+                            <span>Contact Me</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-photo">
+                    <div class="photo-placeholder">
+                        <i class="fas fa-user"></i>
+                        <span>Portrait Photo</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,7 +71,7 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>iOS Developer with experience in building apps using Swift and SwiftUI, including both commercial products and business idea prototypes. Specializes in clean architecture (MVVM), custom UI, animations, API integrations, and UX optimization. Holds a higher degree in Pharmaceutical Sciences and an additional diploma in Programming. Works on projects from concept to fully functional product.</p>
+                    <p>Я iOS-разработчик, создаю приложения на Swift и SwiftUI — от идеи и прототипа до рабочего продукта. Мне близки чистая архитектура (MVVM), кастомные интерфейсы, анимации и продуманная UX-логика. Умею интегрировать REST API, оптимизировать производительность и поддерживать аккуратный код. Получил высшее образование по фармацевтическим наукам и дополнительный диплом по программированию. Открыт к сотрудничеству и новым проектам.</p>
                 </div>
                 <div class="skills">
                     <h3>Skills & Technologies</h3>
@@ -183,7 +191,7 @@
                     <p>Open to new projects and collaborations. Let's discuss your idea.</p>
                 </div>
                 <div class="contact-form-container">
-                    <form class="contact-form" id="contactForm">
+                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                         <div class="form-group">
                             <input type="text" id="name" name="name" placeholder="Your Name" required>
                         </div>
