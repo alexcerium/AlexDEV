@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Alexander - iOS Developer specializing in Swift, SwiftUI, and modern mobile applications. Clean architecture, custom UI, and UX optimization expert.">
+    <meta name="keywords" content="iOS Developer, Swift, SwiftUI, Mobile Development, Alexander">
+    <meta name="author" content="Alexander">
+    <title>Alexander — iOS Developer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Alexander</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Alexander — iOS Developer</h1>
+                <p class="hero-subtitle">I create thoughtful and modern mobile applications</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary magnetic" onclick="downloadResume()">
+                        <span>Download Resume</span>
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
+                        <span>Contact Me</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>iOS Developer with experience in building apps using Swift and SwiftUI, including both commercial products and business idea prototypes. Specializes in clean architecture (MVVM), custom UI, animations, API integrations, and UX optimization. Holds a higher degree in Pharmaceutical Sciences and an additional diploma in Programming. Works on projects from concept to fully functional product.</p>
+                </div>
+                <div class="skills">
+                    <h3>Skills & Technologies</h3>
+                    <div class="skills-grid">
+                        <div class="skill-badge">Swift</div>
+                        <div class="skill-badge">SwiftUI</div>
+                        <div class="skill-badge">MVVM</div>
+                        <div class="skill-badge">Combine</div>
+                        <div class="skill-badge">REST API</div>
+                        <div class="skill-badge">UI/UX Design</div>
+                        <div class="skill-badge">Animations</div>
+                        <div class="skill-badge">Git/GitHub</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ios">iOS</button>
+                <button class="filter-btn" data-filter="prototypes">Prototypes</button>
+                <button class="filter-btn" data-filter="applications">Applications</button>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card" data-category="ios applications">
+                    <div class="project-image">
+                        <div class="project-placeholder">CoffeeDaily</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>CoffeeDaily</h3>
+                        <p>A modern coffee tracking app with beautiful UI and intuitive user experience.</p>
+                        <button class="project-btn" onclick="openProjectModal('coffeedaily')">View Details</button>
+                    </div>
+                </div>
+                <div class="project-card" data-category="prototypes">
+                    <div class="project-image">
+                        <div class="project-placeholder">Boopa</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Boopa</h3>
+                        <p>Innovative social networking prototype with unique interaction patterns.</p>
+                        <button class="project-btn" onclick="openProjectModal('boopa')">View Details</button>
+                    </div>
+                </div>
+                <div class="project-card" data-category="ios applications">
+                    <div class="project-image">
+                        <div class="project-placeholder">MovieMate</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>MovieMate</h3>
+                        <p>Movie discovery and recommendation app with advanced filtering and social features.</p>
+                        <button class="project-btn" onclick="openProjectModal('moviemate')">View Details</button>
+                    </div>
+                </div>
+                <div class="project-card" data-category="prototypes">
+                    <div class="project-image">
+                        <div class="project-placeholder">TestGenius</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>TestGenius</h3>
+                        <p>Educational testing platform with adaptive learning algorithms and progress tracking.</p>
+                        <button class="project-btn" onclick="openProjectModal('testgenius')">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="education-content">
+                <div class="education-item">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-details">
+                        <h3>Pharmacist (Higher Education)</h3>
+                        <p class="institution">Pharmaceutical University</p>
+                        <p class="year">2020</p>
+                    </div>
+                    <button class="diploma-btn" onclick="viewDiploma('pharmacy')">
+                        <i class="fas fa-eye"></i>
+                        View Diploma
+                    </button>
+                </div>
+                <div class="education-item">
+                    <div class="education-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="education-details">
+                        <h3>Diploma in Programming</h3>
+                        <p class="institution">Programming Institute</p>
+                        <p class="year">2022</p>
+                    </div>
+                    <button class="diploma-btn" onclick="viewDiploma('programming')">
+                        <i class="fas fa-eye"></i>
+                        View Diploma
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-text">
+                    <p>Open to new projects and collaborations. Let's discuss your idea.</p>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Send Request</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:alexander@example.com" class="social-link" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Diploma Modal -->
+    <div id="diplomaModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="diplomaContent"></div>
+        </div>
+    </div>
+
+    <!-- Grain Overlay -->
+    <div class="grain-overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
