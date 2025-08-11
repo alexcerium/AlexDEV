@@ -39,7 +39,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-title">Александр — iOS разработчик</h1>
+                    <h1 class="hero-title">Александр Маткава — iOS разработчик</h1>
                     <p class="hero-subtitle">Создаю продуманные и современные мобильные приложения</p>
                     <div class="hero-buttons">
                         <button class="btn btn-primary magnetic" onclick="downloadResume()">
@@ -68,7 +68,7 @@
             <h2 class="section-title">Обо мне</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Я iOS-разработчик, создаю приложения на Swift и SwiftUI — от идеи и прототипа до рабочего продукта. Мне близки чистая архитектура (MVVM), кастомные интерфейсы, анимации и продуманная UX-логика. Умею интегрировать REST API, оптимизировать производительность и поддерживать аккуратный код. Получил высшее образование по фармацевтическим наукам и дополнительный диплом по программированию. Открыт к сотрудничеству и новым проектам.</p>
+                    <p>Меня зовут Александр Маткава. Я создаю iOS-приложения и сайты, уделяя внимание каждой детали. Мне близка идея, что просто — значит гениально, ведь сделать сложное легко, а простое требует настоящего мастерства. Мой путь начался с высшего образования в сфере фармации, где я научился точности, системному мышлению и работе с ответственными задачами. Сегодня эти качества помогают мне разрабатывать цифровые решения, которые работают безупречно и выглядят гармонично.</p>
                 </div>
                 <div class="skills">
                     <h3>Навыки и технологии</h3>
@@ -146,18 +146,17 @@
     <section id="education" class="education">
         <div class="container">
             <h2 class="section-title">Образование</h2>
-            <div class="education-content">
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-code"></i>
+            <div class="diplomas-section">
+                <div class="diploma-wrapper">
+                    <div class="diploma-header">
+                        <div class="diploma-header-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="diploma-header-content">
+                            <h3>Диплом по программированию</h3>
+                            <p>Институт программирования — 2022</p>
+                        </div>
                     </div>
-                    <div class="education-details">
-                        <h3>Диплом по программированию</h3>
-                        <p class="institution">Институт программирования</p>
-                        <p class="year">2022</p>
-                    </div>
-                </div>
-                <div class="diploma-container">
                     <div class="diploma-card" onclick="flipDiploma(this)">
                         <div class="diploma-inner">
                             <div class="diploma-front">
@@ -170,17 +169,16 @@
                     </div>
                 </div>
                 
-                <div class="education-item">
-                    <div class="education-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                <div class="diploma-wrapper">
+                    <div class="diploma-header">
+                        <div class="diploma-header-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="diploma-header-content">
+                            <h3>Фармацевт (Высшее образование)</h3>
+                            <p>Фармацевтический университет — 2020</p>
+                        </div>
                     </div>
-                    <div class="education-details">
-                        <h3>Фармацевт (Высшее образование)</h3>
-                        <p class="institution">Фармацевтический университет</p>
-                        <p class="year">2020</p>
-                    </div>
-                </div>
-                <div class="diploma-container">
                     <div class="diploma-card" onclick="flipDiploma(this)">
                         <div class="diploma-inner">
                             <div class="diploma-front">
@@ -202,37 +200,33 @@
             <h2 class="section-title">Связаться со мной</h2>
             <div class="contact-content">
                 <div class="contact-text">
-                    <p>Открыт к новым проектам и сотрудничеству. Давайте обсудим вашу идею.</p>
+                    <p>Открыт к новым проектам и сотрудничеству. Выберите удобный способ связи:</p>
                 </div>
-                <div class="contact-form-container">
-                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-                        <div class="form-group">
-                            <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                <div class="contact-actions">
+                    <a href="https://t.me/alexcerium" class="contact-action telegram-action" target="_blank" rel="noopener">
+                        <div class="action-icon">
+                            <i class="fab fa-telegram"></i>
                         </div>
-                        <div class="form-group">
-                            <input type="email" id="email" name="email" placeholder="Ваш email" required>
+                        <div class="action-content">
+                            <h3>Telegram</h3>
+                            <p>Быстрое общение и обмен файлами</p>
                         </div>
-                        <div class="form-group">
-                            <textarea id="message" name="message" placeholder="Ваше сообщение" rows="5" required></textarea>
+                        <div class="action-arrow">
+                            <i class="fas fa-arrow-right"></i>
                         </div>
-                        <button type="submit" class="btn btn-primary">
-                            <span>Отправить сообщение</span>
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-                <div class="social-links">
-                    <a href="#" class="social-link" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
                     </a>
-                    <a href="mailto:alexander@example.com" class="social-link" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="social-link" aria-label="Telegram">
-                        <i class="fab fa-telegram"></i>
+                    
+                    <a href="mailto:alexmatkava@gmail.com" class="contact-action email-action">
+                        <div class="action-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="action-content">
+                            <h3>Email</h3>
+                            <p>Подробное обсуждение проекта</p>
+                        </div>
+                        <div class="action-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
                     </a>
                 </div>
             </div>
@@ -244,6 +238,33 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Image Gallery Modal -->
+    <div id="galleryModal" class="modal gallery-modal">
+        <div class="gallery-container">
+            <span class="close gallery-close">&times;</span>
+            <div class="gallery-header">
+                <h3 id="galleryTitle">Галерея проекта</h3>
+                <div class="gallery-counter">
+                    <span id="currentImage">1</span> / <span id="totalImages">3</span>
+                </div>
+            </div>
+            <div class="gallery-main">
+                <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="gallery-image-container">
+                    <img id="galleryImage" src="" alt="Скриншот проекта">
+                </div>
+                <button class="gallery-nav gallery-next" onclick="changeImage(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="gallery-thumbnails" id="galleryThumbnails">
+                <!-- Thumbnails will be populated by JavaScript -->
+            </div>
         </div>
     </div>
 

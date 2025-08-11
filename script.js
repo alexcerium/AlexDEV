@@ -6,8 +6,12 @@ const navLinks = document.querySelectorAll('.nav-link');
 const projectCards = document.querySelectorAll('.project-card');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectModal = document.getElementById('projectModal');
-const diplomaModal = document.getElementById('diplomaModal');
+const galleryModal = document.getElementById('galleryModal');
 const contactForm = document.getElementById('contactForm');
+
+// Gallery state
+let currentGalleryImages = [];
+let currentImageIndex = 0;
 
 // Project Data
 const projects = {
@@ -94,8 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeProjectFilters();
     initializeModals();
     initializeMagneticEffects();
-    initializeContactForm();
     initializeScrollReveal();
+    initializeGallery();
 });
 
 // Navbar Functionality
@@ -190,7 +194,7 @@ function filterProjects(filter) {
 function initializeModals() {
     // Close modals when clicking outside
     window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
+        if (e.target.classList.contains('modal') && !e.target.classList.contains('gallery-modal')) {
             e.target.style.display = 'none';
         }
     });
@@ -198,18 +202,88 @@ function initializeModals() {
     // Close modals when clicking close button
     document.querySelectorAll('.close').forEach(closeBtn => {
         closeBtn.addEventListener('click', () => {
-            closeBtn.closest('.modal').style.display = 'none';
+            if (closeBtn.closest('.gallery-modal')) {
+                closeGallery();
+            } else {
+                closeBtn.closest('.modal').style.display = 'none';
+            }
         });
     });
 
     // Close modals with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.style.display = 'none';
-            });
+            if (galleryModal.style.display === 'block') {
+                closeGallery();
+            } else {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (!modal.classList.contains('gallery-modal')) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
         }
     });
+}
+
+// Gallery Functionality
+function initializeGallery() {
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (galleryModal.style.display === 'block') {
+            if (e.key === 'ArrowLeft') {
+                changeImage(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeImage(1);
+            } else if (e.key === 'Escape') {
+                closeGallery();
+            }
+        }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+
+    galleryModal.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    });
+
+    galleryModal.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+        
+        // Only handle horizontal swipes if they're more significant than vertical
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+            if (diffX > 0) {
+                changeImage(1); // Swipe left - next
+            } else {
+                changeImage(-1); // Swipe right - previous
+            }
+        }
+    }
+
+    // Close gallery when clicking outside the image
+    galleryModal.addEventListener('click', (e) => {
+        if (e.target === galleryModal || e.target.classList.contains('gallery-close')) {
+            closeGallery();
+        }
+    });
+}
+
+function closeGallery() {
+    galleryModal.style.display = 'none';
+    document.body.style.overflow = '';
 }
 
 // Magnetic Effects
@@ -254,42 +328,83 @@ function initializeScrollReveal() {
     });
 }
 
-// Contact Form
-function initializeContactForm() {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(contactForm);
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
+// Gallery Functions
+function openGallery(images, title) {
+    currentGalleryImages = images;
+    currentImageIndex = 0;
+    
+    document.getElementById('galleryTitle').textContent = title;
+    document.getElementById('totalImages').textContent = images.length;
+    
+    updateGalleryImage();
+    updateGalleryThumbnails();
+    
+    galleryModal.style.display = 'block';
+    
+    // Prevent body scroll when gallery is open
+    document.body.style.overflow = 'hidden';
+}
+
+function updateGalleryImage() {
+    const image = document.getElementById('galleryImage');
+    const counter = document.getElementById('currentImage');
+    const container = document.querySelector('.gallery-image-container');
+    
+    if (currentGalleryImages.length > 0) {
         // Show loading state
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
-        submitBtn.disabled = true;
+        container.classList.add('loading');
+        image.style.opacity = '0';
         
-        try {
-            const response = await fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            });
-            
-            if (response.ok) {
-                showNotification('Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.', 'success');
-                contactForm.reset();
-            } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (error) {
-            showNotification('Извините, произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.', 'error');
-            console.error('Form submission error:', error);
-        } finally {
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }
+        // Preload image for smooth transition
+        const img = new Image();
+        img.onload = function() {
+            image.src = currentGalleryImages[currentImageIndex];
+            container.classList.remove('loading');
+            setTimeout(() => {
+                image.style.opacity = '1';
+            }, 100);
+        };
+        img.onerror = function() {
+            container.classList.remove('loading');
+            image.style.opacity = '1';
+        };
+        img.src = currentGalleryImages[currentImageIndex];
+        
+        counter.textContent = currentImageIndex + 1;
+    }
+}
+
+function updateGalleryThumbnails() {
+    const container = document.getElementById('galleryThumbnails');
+    container.innerHTML = '';
+    
+    currentGalleryImages.forEach((image, index) => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = image;
+        thumbnail.alt = `Скриншот ${index + 1}`;
+        thumbnail.className = `gallery-thumbnail ${index === currentImageIndex ? 'active' : ''}`;
+        thumbnail.onclick = () => {
+            currentImageIndex = index;
+            updateGalleryImage();
+            updateGalleryThumbnails();
+        };
+        container.appendChild(thumbnail);
     });
+}
+
+function changeImage(direction) {
+    if (currentGalleryImages.length === 0) return;
+    
+    currentImageIndex += direction;
+    
+    if (currentImageIndex < 0) {
+        currentImageIndex = currentGalleryImages.length - 1;
+    } else if (currentImageIndex >= currentGalleryImages.length) {
+        currentImageIndex = 0;
+    }
+    
+    updateGalleryImage();
+    updateGalleryThumbnails();
 }
 
 // Utility Functions
@@ -318,28 +433,34 @@ function openProjectModal(projectId) {
     const modalContent = document.getElementById('modalContent');
     modalContent.innerHTML = `
         <div class="project-modal">
-            <h2>${project.title}</h2>
-            <p class="project-category">${project.category}</p>
-            <p class="project-description">${project.description}</p>
+            <div class="project-modal-header">
+                <h2>${project.title}</h2>
+                <p class="project-category">${project.category}</p>
+                <p class="project-description">${project.description}</p>
+            </div>
             
-            <div class="project-technologies">
-                <h3>Technologies Used</h3>
-                <div class="tech-tags">
-                    ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+            <div class="project-modal-content">
+                <div class="project-info-section">
+                    <div class="project-technologies">
+                        <h3>Technologies Used</h3>
+                        <div class="tech-tags">
+                            ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="project-features">
+                        <h3>Key Features</h3>
+                        <ul>
+                            ${project.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="project-features">
-                <h3>Key Features</h3>
-                <ul>
-                    ${project.features.map(feature => `<li>${feature}</li>`).join('')}
-                </ul>
-            </div>
-            
-            <div class="project-gallery">
-                <h3>Скриншоты проекта</h3>
-                <div class="gallery-grid">
-                    ${project.images.map(img => `<img src="${img}" alt="Скриншот проекта" class="gallery-img">`).join('')}
+                
+                <div class="project-gallery-section">
+                    <h3>Скриншоты проекта</h3>
+                    <div class="gallery-grid">
+                        ${project.images.map((img, index) => `<img src="${img}" alt="Скриншот проекта" class="gallery-img" onclick="openGallery(${JSON.stringify(project.images)}, '${project.title}')">`).join('')}
+                    </div>
                 </div>
             </div>
         </div>
@@ -425,6 +546,34 @@ notificationStyles.textContent = `
         color: #EF4444;
     }
     
+    .project-modal {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .project-modal-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .project-modal-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+    
+    .project-info-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .project-gallery-section {
+        min-height: 400px;
+    }
+    
     .project-modal h2 {
         color: var(--text-primary);
         margin-bottom: 0.5rem;
@@ -492,9 +641,50 @@ notificationStyles.textContent = `
     
     .gallery-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-        margin-top: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .gallery-img {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        object-fit: contain;
+        border-radius: 12px;
+        border: 2px solid var(--border-color);
+        transition: var(--transition-medium);
+        cursor: pointer;
+        background: var(--card-bg);
+        padding: 0.5rem;
+    }
+    
+    .gallery-img:hover {
+        transform: scale(1.05);
+        border-color: var(--accent-primary);
+        box-shadow: var(--shadow-secondary);
+    }
+    
+    /* Responsive styles for modal */
+    @media (max-width: 768px) {
+        .project-modal-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .project-gallery-section {
+            min-height: 300px;
+        }
+        
+        .gallery-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-img {
+            max-height: 200px;
+        }
     }
     
     .gallery-item {
