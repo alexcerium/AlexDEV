@@ -186,37 +186,19 @@ body {
     align-items: center;
 }
 
-.photo-placeholder {
+.hero-portrait {
     width: 300px;
     height: 300px;
-    background: var(--card-bg);
-    border: 2px solid var(--border-color);
     border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
+    object-fit: cover;
+    border: 3px solid var(--accent-primary);
+    box-shadow: var(--shadow-primary);
     transition: var(--transition-medium);
-    position: relative;
-    overflow: hidden;
 }
 
-.photo-placeholder:hover {
-    border-color: var(--accent-primary);
+.hero-portrait:hover {
     transform: scale(1.05);
-}
-
-.photo-placeholder i {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    color: var(--accent-primary);
-}
-
-.photo-placeholder span {
-    font-size: 0.9rem;
-    text-align: center;
-    max-width: 200px;
+    box-shadow: 0 12px 40px rgba(30, 79, 255, 0.3);
 }
 
 .hero-title {
@@ -451,11 +433,15 @@ section {
     overflow: hidden;
 }
 
-.project-placeholder {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--accent-primary);
-    text-align: center;
+.project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-medium);
+}
+
+.project-card:hover .project-img {
+    transform: scale(1.05);
 }
 
 .project-content {
@@ -548,23 +534,66 @@ section {
     font-weight: 600;
 }
 
-.diploma-btn {
-    background: transparent;
-    border: 1px solid var(--accent-primary);
-    color: var(--accent-primary);
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    font-weight: 500;
+.diploma-container {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    margin: 2rem 0;
 }
 
-.diploma-btn:hover {
-    background: var(--accent-primary);
-    color: var(--text-primary);
+.diploma-card {
+    width: 300px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.diploma-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.diploma-card.flipped .diploma-inner {
+    transform: rotateY(180deg);
+}
+
+.diploma-front,
+.diploma-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-secondary);
+    border: 2px solid var(--border-color);
+}
+
+.diploma-front {
+    background: var(--card-bg);
+}
+
+.diploma-back {
+    background: var(--card-bg);
+    transform: rotateY(180deg);
+}
+
+.diploma-front img,
+.diploma-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.diploma-card:hover {
+    transform: translateY(-5px);
+}
+
+.diploma-card:hover .diploma-inner {
+    box-shadow: 0 15px 35px rgba(30, 79, 255, 0.2);
 }
 
 /* Contact Section */
@@ -785,7 +814,7 @@ section {
         order: -1;
     }
     
-    .photo-placeholder {
+    .hero-portrait {
         width: 250px;
         height: 250px;
     }
@@ -823,6 +852,11 @@ section {
         gap: 1rem;
     }
     
+    .diploma-card {
+        width: 250px;
+        height: 160px;
+    }
+    
     .social-links {
         gap: 1rem;
     }
@@ -857,4 +891,19 @@ section {
         padding: 1.5rem;
         width: 95%;
     }
+}
+
+/* Gallery Image Styles */
+.gallery-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-medium);
+}
+
+.gallery-img:hover {
+    transform: scale(1.05);
+    border-color: var(--accent-primary);
 }

@@ -13,77 +13,77 @@ const contactForm = document.getElementById('contactForm');
 const projects = {
     coffeedaily: {
         title: 'CoffeeDaily',
-        category: 'iOS Application',
-        description: 'A modern coffee tracking app with beautiful UI and intuitive user experience. Built with SwiftUI and Core Data, featuring custom animations and a clean MVVM architecture.',
+        category: 'iOS Приложение',
+        description: 'Современное приложение для отслеживания кофе с красивым интерфейсом и интуитивным пользовательским опытом. Построено на SwiftUI и Core Data с кастомными анимациями и чистой MVVM архитектурой.',
         technologies: ['Swift', 'SwiftUI', 'Core Data', 'Combine', 'MVVM'],
         features: [
-            'Daily coffee consumption tracking',
-            'Custom coffee bean management',
-            'Beautiful charts and statistics',
-            'Dark mode support',
-            'Widget support'
+            'Ежедневное отслеживание потребления кофе',
+            'Управление кастомными сортами кофе',
+            'Красивые графики и статистика',
+            'Поддержка темной темы',
+            'Поддержка виджетов'
         ],
-        images: ['coffeedaily-1.jpg', 'coffeedaily-2.jpg', 'coffeedaily-3.jpg']
+        images: ['assets/coffeedaily-1.png', 'assets/coffeedaily-2.png', 'assets/coffeedaily-3.png']
     },
     boopa: {
         title: 'Boopa',
-        category: 'Social Prototype',
-        description: 'Innovative social networking prototype with unique interaction patterns. Features gesture-based navigation and real-time messaging capabilities.',
+        category: 'Социальный прототип',
+        description: 'Инновационный прототип социальной сети с уникальными паттернами взаимодействия. Включает навигацию на основе жестов и возможности обмена сообщениями в реальном времени.',
         technologies: ['Swift', 'SwiftUI', 'Firebase', 'WebRTC', 'Combine'],
         features: [
-            'Gesture-based navigation',
-            'Real-time messaging',
-            'Voice and video calls',
-            'Custom UI components',
-            'Push notifications'
+            'Навигация на основе жестов',
+            'Обмен сообщениями в реальном времени',
+            'Голосовые и видеозвонки',
+            'Кастомные UI компоненты',
+            'Push-уведомления'
         ],
-        images: ['boopa-1.jpg', 'boopa-2.jpg', 'boopa-3.jpg']
+        images: ['assets/boopa-1.png', 'assets/boopa-2.png', 'assets/boopa-3.png']
     },
     moviemate: {
         title: 'MovieMate',
-        category: 'iOS Application',
-        description: 'Movie discovery and recommendation app with advanced filtering and social features. Integrates with multiple movie APIs and provides personalized recommendations.',
+        category: 'iOS Приложение',
+        description: 'Приложение для поиска и рекомендации фильмов с продвинутой фильтрацией и социальными функциями. Интегрируется с несколькими API фильмов и предоставляет персонализированные рекомендации.',
         technologies: ['Swift', 'SwiftUI', 'Combine', 'Core Data', 'REST API'],
         features: [
-            'Movie discovery and search',
-            'Personalized recommendations',
-            'Watchlist management',
-            'Social sharing features',
-            'Offline support'
+            'Поиск и открытие фильмов',
+            'Персонализированные рекомендации',
+            'Управление списком просмотра',
+            'Социальные функции',
+            'Офлайн поддержка'
         ],
-        images: ['moviemate-1.jpg', 'moviemate-2.jpg', 'moviemate-3.jpg']
+        images: ['assets/moviemate-1.png', 'assets/moviemate-2.png', 'assets/moviemate-3.png']
     },
     testgenius: {
         title: 'TestGenius',
-        category: 'Educational Prototype',
-        description: 'Educational testing platform with adaptive learning algorithms and progress tracking. Designed for personalized learning experiences.',
+        category: 'Образовательный прототип',
+        description: 'Образовательная платформа для тестирования с адаптивными алгоритмами обучения и отслеживанием прогресса. Разработана для персонализированного обучения.',
         technologies: ['Swift', 'SwiftUI', 'Core ML', 'Core Data', 'Combine'],
         features: [
-            'Adaptive learning algorithms',
-            'Progress tracking',
-            'Multiple question types',
-            'Performance analytics',
-            'Study reminders'
+            'Адаптивные алгоритмы обучения',
+            'Отслеживание прогресса',
+            'Множественные типы вопросов',
+            'Аналитика производительности',
+            'Напоминания об учебе'
         ],
-        images: ['testgenius-1.jpg', 'testgenius-2.jpg', 'testgenius-3.jpg']
+        images: ['assets/testgenius-1.png', 'assets/testgenius-2.png', 'assets/testgenius-3.png']
     }
 };
 
 // Diploma Data
 const diplomas = {
     pharmacy: {
-        title: 'Pharmacist (Higher Education)',
-        institution: 'Pharmaceutical University',
+        title: 'Фармацевт (Высшее образование)',
+        institution: 'Фармацевтический университет',
         year: '2020',
-        description: 'Comprehensive study of pharmaceutical sciences including drug development, pharmacology, and patient care.',
-        image: 'pharmacy-diploma.jpg'
+        description: 'Комплексное изучение фармацевтических наук, включая разработку лекарств, фармакологию и уход за пациентами.',
+        image: 'assets/Pharm-1.jpg'
     },
     programming: {
-        title: 'Diploma in Programming',
-        institution: 'Programming Institute',
+        title: 'Диплом по программированию',
+        institution: 'Институт программирования',
         year: '2022',
-        description: 'Advanced programming course covering modern development practices, algorithms, and software architecture.',
-        image: 'programming-diploma.jpg'
+        description: 'Продвинутый курс программирования, охватывающий современные практики разработки, алгоритмы и архитектуру программного обеспечения.',
+        image: 'assets/IT-1.jpg'
     }
 };
 
@@ -264,7 +264,7 @@ function initializeContactForm() {
         const originalText = submitBtn.innerHTML;
         
         // Show loading state
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
         submitBtn.disabled = true;
         
         try {
@@ -277,13 +277,13 @@ function initializeContactForm() {
             });
             
             if (response.ok) {
-                showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+                showNotification('Сообщение успешно отправлено! Я свяжусь с вами в ближайшее время.', 'success');
                 contactForm.reset();
             } else {
                 throw new Error('Form submission failed');
             }
         } catch (error) {
-            showNotification('Sorry, there was an error sending your message. Please try again.', 'error');
+            showNotification('Извините, произошла ошибка при отправке сообщения. Пожалуйста, попробуйте еще раз.', 'error');
             console.error('Form submission error:', error);
         } finally {
             submitBtn.innerHTML = originalText;
@@ -296,11 +296,11 @@ function initializeContactForm() {
 function downloadResume() {
     // Create a dummy resume download
     const link = document.createElement('a');
-    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('Alexander - iOS Developer Resume\n\nExperience:\n- iOS Developer with Swift/SwiftUI\n- MVVM Architecture\n- Custom UI/UX Design\n- API Integration\n- Animation Development\n\nEducation:\n- Pharmacist (Higher Education) - 2020\n- Diploma in Programming - 2022\n\nSkills:\nSwift, SwiftUI, Combine, Core Data, REST API, Git/GitHub');
-    link.download = 'Alexander_Resume.txt';
+    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('Александр - iOS разработчик резюме\n\nОпыт:\n- iOS разработчик на Swift/SwiftUI\n- MVVM архитектура\n- Кастомный UI/UX дизайн\n- Интеграция API\n- Разработка анимаций\n\nОбразование:\n- Фармацевт (Высшее образование) - 2020\n- Диплом по программированию - 2022\n\nНавыки:\nSwift, SwiftUI, Combine, Core Data, REST API, Git/GitHub');
+    link.download = 'Александр_Резюме.txt';
     link.click();
     
-    showNotification('Resume downloaded successfully!', 'success');
+    showNotification('Резюме успешно скачано!', 'success');
 }
 
 function scrollToContact() {
@@ -337,12 +337,9 @@ function openProjectModal(projectId) {
             </div>
             
             <div class="project-gallery">
-                <h3>Project Screenshots</h3>
-                <div class="gallery-placeholder">
-                    <p>Project screenshots would be displayed here</p>
-                    <div class="gallery-grid">
-                        ${project.images.map(img => `<div class="gallery-item">${img}</div>`).join('')}
-                    </div>
+                <h3>Скриншоты проекта</h3>
+                <div class="gallery-grid">
+                    ${project.images.map(img => `<img src="${img}" alt="Скриншот проекта" class="gallery-img">`).join('')}
                 </div>
             </div>
         </div>
@@ -351,38 +348,12 @@ function openProjectModal(projectId) {
     projectModal.style.display = 'block';
 }
 
-function viewDiploma(diplomaId) {
-    const diploma = diplomas[diplomaId];
-    if (!diploma) return;
-    
-    const diplomaContent = document.getElementById('diplomaContent');
-    diplomaContent.innerHTML = `
-        <div class="diploma-modal">
-            <h2>${diploma.title}</h2>
-            <div class="diploma-info">
-                <p><strong>Institution:</strong> ${diploma.institution}</p>
-                <p><strong>Year:</strong> ${diploma.year}</p>
-            </div>
-            <p class="diploma-description">${diploma.description}</p>
-            <div class="diploma-preview">
-                <div class="diploma-image-placeholder">
-                    <i class="fas fa-certificate"></i>
-                    <p>Diploma Preview</p>
-                    <p class="diploma-filename">${diploma.image}</p>
-                </div>
-            </div>
-            <button class="btn btn-primary" onclick="downloadDiploma('${diplomaId}')">
-                <i class="fas fa-download"></i>
-                Download Diploma
-            </button>
-        </div>
-    `;
-    
-    diplomaModal.style.display = 'block';
+function flipDiploma(card) {
+    card.classList.toggle('flipped');
 }
 
 function downloadDiploma(diplomaId) {
-    showNotification('Diploma download started!', 'success');
+    showNotification('Загрузка диплома началась!', 'success');
     // In a real implementation, this would download the actual PDF
 }
 
@@ -454,21 +425,18 @@ notificationStyles.textContent = `
         color: #EF4444;
     }
     
-    .project-modal h2,
-    .diploma-modal h2 {
+    .project-modal h2 {
         color: var(--text-primary);
         margin-bottom: 0.5rem;
     }
     
-    .project-category,
-    .diploma-info {
+    .project-category {
         color: var(--accent-primary);
         font-weight: 600;
         margin-bottom: 1rem;
     }
     
-    .project-description,
-    .diploma-description {
+    .project-description {
         color: var(--text-secondary);
         line-height: 1.6;
         margin-bottom: 2rem;
@@ -536,27 +504,6 @@ notificationStyles.textContent = `
         padding: 2rem 1rem;
         color: var(--text-muted);
         font-size: 0.9rem;
-    }
-    
-    .diploma-image-placeholder {
-        text-align: center;
-        padding: 3rem;
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        margin-bottom: 2rem;
-    }
-    
-    .diploma-image-placeholder i {
-        font-size: 3rem;
-        color: var(--accent-primary);
-        margin-bottom: 1rem;
-    }
-    
-    .diploma-filename {
-        font-size: 0.9rem;
-        color: var(--text-muted);
-        margin-top: 0.5rem;
     }
 `;
 document.head.appendChild(notificationStyles);
