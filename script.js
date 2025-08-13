@@ -7,92 +7,20 @@ const projectCards = document.querySelectorAll('.project-card');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectModal = document.getElementById('projectModal');
 const galleryModal = document.getElementById('galleryModal');
-const contactForm = document.getElementById('contactForm');
 
 // Gallery state
 let currentGalleryImages = [];
 let currentImageIndex = 0;
 
-// Project Data
-const projects = {
-    coffeedaily: {
-        title: 'CoffeeDaily',
-        category: 'iOS Приложение',
-        description: 'Современное приложение для отслеживания кофе с красивым интерфейсом и интуитивным пользовательским опытом. Построено на SwiftUI и Core Data с кастомными анимациями и чистой MVVM архитектурой.',
-        technologies: ['Swift', 'SwiftUI', 'Core Data', 'Combine', 'MVVM'],
-        features: [
-            'Ежедневное отслеживание потребления кофе',
-            'Управление кастомными сортами кофе',
-            'Красивые графики и статистика',
-            'Поддержка темной темы',
-            'Поддержка виджетов'
-        ],
-        images: ['assets/coffeedaily-1.png', 'assets/coffeedaily-2.png', 'assets/coffeedaily-3.png']
-    },
-    boopa: {
-        title: 'Boopa',
-        category: 'Социальный прототип',
-        description: 'Инновационный прототип социальной сети с уникальными паттернами взаимодействия. Включает навигацию на основе жестов и возможности обмена сообщениями в реальном времени.',
-        technologies: ['Swift', 'SwiftUI', 'Firebase', 'WebRTC', 'Combine'],
-        features: [
-            'Навигация на основе жестов',
-            'Обмен сообщениями в реальном времени',
-            'Голосовые и видеозвонки',
-            'Кастомные UI компоненты',
-            'Push-уведомления'
-        ],
-        images: ['assets/boopa-1.png', 'assets/boopa-2.png', 'assets/boopa-3.png']
-    },
-    moviemate: {
-        title: 'MovieMate',
-        category: 'iOS Приложение',
-        description: 'Приложение для поиска и рекомендации фильмов с продвинутой фильтрацией и социальными функциями. Интегрируется с несколькими API фильмов и предоставляет персонализированные рекомендации.',
-        technologies: ['Swift', 'SwiftUI', 'Combine', 'Core Data', 'REST API'],
-        features: [
-            'Поиск и открытие фильмов',
-            'Персонализированные рекомендации',
-            'Управление списком просмотра',
-            'Социальные функции',
-            'Офлайн поддержка'
-        ],
-        images: ['assets/moviemate-1.png', 'assets/moviemate-2.png', 'assets/moviemate-3.png']
-    },
-    testgenius: {
-        title: 'TestGenius',
-        category: 'Образовательный прототип',
-        description: 'Образовательная платформа для тестирования с адаптивными алгоритмами обучения и отслеживанием прогресса. Разработана для персонализированного обучения.',
-        technologies: ['Swift', 'SwiftUI', 'Core ML', 'Core Data', 'Combine'],
-        features: [
-            'Адаптивные алгоритмы обучения',
-            'Отслеживание прогресса',
-            'Множественные типы вопросов',
-            'Аналитика производительности',
-            'Напоминания об учебе'
-        ],
-        images: ['assets/testgenius-1.png', 'assets/testgenius-2.png', 'assets/testgenius-3.png']
-    }
-};
-
-// Diploma Data
-const diplomas = {
-    pharmacy: {
-        title: 'Фармацевт (Высшее образование)',
-        institution: 'Фармацевтический университет',
-        year: '2020',
-        description: 'Комплексное изучение фармацевтических наук, включая разработку лекарств, фармакологию и уход за пациентами.',
-        image: 'assets/Pharm-1.jpg'
-    },
-    programming: {
-        title: 'Диплом по программированию',
-        institution: 'Институт программирования',
-        year: '2022',
-        description: 'Продвинутый курс программирования, охватывающий современные практики разработки, алгоритмы и архитектуру программного обеспечения.',
-        image: 'assets/IT-1.jpg'
-    }
-};
-
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Wait for SITE data to be loaded
+    if (typeof window.SITE === 'undefined') {
+        console.error('SITE data not loaded');
+        return;
+    }
+    
+    initializeSite();
     initializeNavbar();
     initializeScrollEffects();
     initializeProjectFilters();
@@ -101,6 +29,273 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollReveal();
     initializeGallery();
 });
+
+// Site Initialization
+function initializeSite() {
+    // Update meta tags
+    document.title = window.SITE.meta.title;
+    document.querySelector('meta[name="description"]').setAttribute('content', window.SITE.meta.description);
+    document.querySelector('meta[name="keywords"]').setAttribute('content', window.SITE.meta.keywords);
+    document.querySelector('meta[name="author"]').setAttribute('content', window.SITE.meta.author);
+    
+    // Initialize navigation
+    initializeNavigation();
+    
+    // Initialize hero section
+    initializeHero();
+    
+    // Initialize about section
+    initializeAbout();
+    
+    // Initialize projects section
+    initializeProjects();
+    
+    // Initialize education section
+    initializeEducation();
+    
+    // Initialize contact section
+    initializeContact();
+    
+    // Initialize new sections
+    initializeServices();
+    initializeProcess();
+    initializeFAQ();
+    initializeLegal();
+    initializeFooter();
+}
+
+// Navigation Initialization
+function initializeNavigation() {
+    const navMenu = document.getElementById('navMenu');
+    navMenu.innerHTML = window.SITE.navigation.map(nav => 
+        `<li><a href="#${nav.id}" class="nav-link">${nav.text}</a></li>`
+    ).join('');
+}
+
+// Hero Section Initialization
+function initializeHero() {
+    const heroTitle = document.getElementById('heroTitle');
+    const heroSubtitle = document.getElementById('heroSubtitle');
+    const heroPortrait = document.getElementById('heroPortrait');
+    const heroFlagship = document.getElementById('heroFlagship');
+    
+    if (heroTitle) heroTitle.textContent = window.SITE.hero.title;
+    if (heroSubtitle) heroSubtitle.textContent = window.SITE.hero.subtitle;
+    if (heroPortrait) heroPortrait.src = window.SITE.hero.portrait;
+    
+    // Initialize flagship badge
+    if (heroFlagship && window.SITE.hero.flagship.show) {
+        heroFlagship.innerHTML = `
+            <div class="flagship-badge" onclick="scrollToProject('coffeedaily')">
+                <i class="fas fa-star"></i>
+                <span>${window.SITE.hero.flagship.text}</span>
+            </div>
+        `;
+    }
+}
+
+// About Section Initialization
+function initializeAbout() {
+    const aboutDescription = document.getElementById('aboutDescription');
+    const skillsGrid = document.getElementById('skillsGrid');
+    
+    if (aboutDescription) aboutDescription.textContent = window.SITE.about.description;
+    
+    if (skillsGrid) {
+        skillsGrid.innerHTML = window.SITE.skills.map(skill => 
+            `<div class="skill-badge">${skill}</div>`
+        ).join('');
+    }
+}
+
+// Projects Section Initialization
+function initializeProjects() {
+    const projectFilters = document.getElementById('projectFilters');
+    const projectsGrid = document.getElementById('projectsGrid');
+    
+    // Initialize filters
+    if (projectFilters) {
+        projectFilters.innerHTML = window.SITE.filters.map(filter => 
+            `<button class="filter-btn ${filter.id === 'all' ? 'active' : ''}" data-filter="${filter.id}">${filter.text}</button>`
+        ).join('');
+    }
+    
+    // Initialize projects
+    if (projectsGrid) {
+        projectsGrid.innerHTML = window.SITE.projects.map(project => `
+            <div class="project-card" data-category="${project.category.join(' ')}">
+                <div class="project-image">
+                    <img src="${project.preview}" alt="${project.name}" class="project-img">
+                    ${project.isFlagship ? '<div class="project-flagship-badge"><i class="fas fa-star"></i></div>' : ''}
+                </div>
+                <div class="project-content">
+                    <h3>${project.name}</h3>
+                    <p>${project.problem}</p>
+                    <button class="project-btn" onclick="openProjectModal('${project.id}')">Подробнее</button>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Education Section Initialization
+function initializeEducation() {
+    const diplomasSection = document.getElementById('diplomasSection');
+    
+    if (diplomasSection) {
+        diplomasSection.innerHTML = window.SITE.education.map(education => `
+            <div class="diploma-wrapper">
+                <div class="diploma-header">
+                    <div class="diploma-header-icon">
+                        <i class="${education.icon}"></i>
+                    </div>
+                    <div class="diploma-header-content">
+                        <h3>${education.title}</h3>
+                        <p>${education.organization} — ${education.year}</p>
+                    </div>
+                </div>
+                <div class="diploma-card" onclick="flipDiploma(this)">
+                    <div class="diploma-inner">
+                        <div class="diploma-front">
+                            <img src="${education.images[0]}" alt="${education.title} - лицевая сторона">
+                        </div>
+                        <div class="diploma-back">
+                            <img src="${education.images[1]}" alt="${education.title} - обратная сторона">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Contact Section Initialization
+function initializeContact() {
+    const contactDescription = document.getElementById('contactDescription');
+    const contactActions = document.getElementById('contactActions');
+    
+    if (contactDescription) contactDescription.textContent = window.SITE.contact.description;
+    
+    if (contactActions) {
+        contactActions.innerHTML = window.SITE.contact.methods.map(method => `
+            <a href="${method.url}" class="contact-action ${method.type}-action" ${method.type === 'telegram' ? 'target="_blank" rel="noopener"' : ''}>
+                <div class="action-icon">
+                    <i class="${method.icon}"></i>
+                </div>
+                <div class="action-content">
+                    <h3>${method.title}</h3>
+                    <p>${method.description}</p>
+                </div>
+                <div class="action-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        `).join('');
+    }
+}
+
+// Services Section Initialization
+function initializeServices() {
+    const servicesTitle = document.getElementById('servicesTitle');
+    const servicesSubtitle = document.getElementById('servicesSubtitle');
+    const servicesGrid = document.getElementById('servicesGrid');
+    
+    if (servicesTitle) servicesTitle.textContent = window.SITE.services.title;
+    if (servicesSubtitle) servicesSubtitle.textContent = window.SITE.services.subtitle;
+    
+    if (servicesGrid) {
+        servicesGrid.innerHTML = window.SITE.services.packages.map(service => `
+            <div class="service-card">
+                <div class="service-header">
+                    <h3>${service.name}</h3>
+                    <div class="service-price">${service.price}</div>
+                </div>
+                <div class="service-duration">${service.duration}</div>
+                <p>${service.description}</p>
+            </div>
+        `).join('');
+    }
+}
+
+// Process Section Initialization
+function initializeProcess() {
+    const processTitle = document.getElementById('processTitle');
+    const processSteps = document.getElementById('processSteps');
+    const processSla = document.getElementById('processSla');
+    
+    if (processTitle) processTitle.textContent = window.SITE.process.title;
+    
+    if (processSteps) {
+        processSteps.innerHTML = window.SITE.process.steps.map(step => `
+            <div class="process-step">
+                <div class="step-number">${step.number}</div>
+                <div class="step-content">
+                    <h3>${step.title}</h3>
+                    <p>${step.description}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    if (processSla) {
+        processSla.innerHTML = `
+            <h3>${window.SITE.process.sla.title}</h3>
+            <ul>
+                ${window.SITE.process.sla.items.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+        `;
+    }
+}
+
+// FAQ Section Initialization
+function initializeFAQ() {
+    const faqTitle = document.getElementById('faqTitle');
+    const faqContent = document.getElementById('faqContent');
+    
+    if (faqTitle) faqTitle.textContent = window.SITE.faq.title;
+    
+    if (faqContent) {
+        faqContent.innerHTML = window.SITE.faq.items.map((item, index) => `
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(${index})">
+                    <h3>${item.question}</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer" id="faq-answer-${index}">
+                    <p>${item.answer}</p>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Legal Pages Initialization
+function initializeLegal() {
+    const privacyTitle = document.getElementById('privacyTitle');
+    const privacyContent = document.getElementById('privacyContent');
+    const termsTitle = document.getElementById('termsTitle');
+    const termsContent = document.getElementById('termsContent');
+    
+    if (privacyTitle) privacyTitle.textContent = window.SITE.legal.privacy.title;
+    if (privacyContent) privacyContent.innerHTML = `<p>${window.SITE.legal.privacy.content}</p>`;
+    
+    if (termsTitle) termsTitle.textContent = window.SITE.legal.terms.title;
+    if (termsContent) termsContent.innerHTML = `<p>${window.SITE.legal.terms.content}</p>`;
+}
+
+// Footer Initialization
+function initializeFooter() {
+    const footerAuthor = document.getElementById('footerAuthor');
+    const footerLinks = document.getElementById('footerLinks');
+    
+    if (footerAuthor) footerAuthor.textContent = window.SITE.footer.author;
+    
+    if (footerLinks) {
+        footerLinks.innerHTML = window.SITE.footer.links.map(link => 
+            `<a href="${link.href}" class="footer-link">${link.text}</a>`
+        ).join('');
+    }
+}
 
 // Navbar Functionality
 function initializeNavbar() {
@@ -111,11 +306,11 @@ function initializeNavbar() {
     });
 
     // Close mobile menu when clicking on a link
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('nav-link')) {
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
-        });
+        }
     });
 
     // Navbar background on scroll
@@ -128,10 +323,10 @@ function initializeNavbar() {
     });
 
     // Smooth scrolling for navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('nav-link')) {
             e.preventDefault();
-            const targetId = link.getAttribute('href');
+            const targetId = e.target.getAttribute('href');
             const targetSection = document.querySelector(targetId);
             if (targetSection) {
                 targetSection.scrollIntoView({
@@ -139,7 +334,7 @@ function initializeNavbar() {
                     block: 'start'
                 });
             }
-        });
+        }
     });
 }
 
@@ -157,20 +352,21 @@ function initializeScrollEffects() {
 
 // Project Filters
 function initializeProjectFilters() {
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-btn')) {
             // Remove active class from all buttons
-            filterBtns.forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             // Add active class to clicked button
-            btn.classList.add('active');
+            e.target.classList.add('active');
             
-            const filter = btn.getAttribute('data-filter');
+            const filter = e.target.getAttribute('data-filter');
             filterProjects(filter);
-        });
+        }
     });
 }
 
 function filterProjects(filter) {
+    const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach(card => {
         const category = card.getAttribute('data-category');
         
@@ -200,14 +396,14 @@ function initializeModals() {
     });
 
     // Close modals when clicking close button
-    document.querySelectorAll('.close').forEach(closeBtn => {
-        closeBtn.addEventListener('click', () => {
-            if (closeBtn.closest('.gallery-modal')) {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('close')) {
+            if (e.target.closest('.gallery-modal')) {
                 closeGallery();
             } else {
-                closeBtn.closest('.modal').style.display = 'none';
+                e.target.closest('.modal').style.display = 'none';
             }
-        });
+        }
     });
 
     // Close modals with Escape key
@@ -427,39 +623,50 @@ function scrollToContact() {
 }
 
 function openProjectModal(projectId) {
-    const project = projects[projectId];
+    const project = window.SITE.projects.find(p => p.id === projectId);
     if (!project) return;
     
     const modalContent = document.getElementById('modalContent');
     modalContent.innerHTML = `
         <div class="project-modal">
             <div class="project-modal-header">
-                <h2>${project.title}</h2>
-                <p class="project-category">${project.category}</p>
-                <p class="project-description">${project.description}</p>
+                <h2>${project.name}</h2>
+                <p class="project-category">${project.category.join(' ')}</p>
+                ${project.isFlagship ? '<div class="project-flagship-indicator"><i class="fas fa-star"></i> Флагман-кейс</div>' : ''}
             </div>
             
             <div class="project-modal-content">
                 <div class="project-info-section">
-                    <div class="project-technologies">
-                        <h3>Technologies Used</h3>
-                        <div class="tech-tags">
-                            ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    <div class="project-schema">
+                        <div class="schema-item">
+                            <h3>Проблема</h3>
+                            <p>${project.problem}</p>
                         </div>
-                    </div>
-                    
-                    <div class="project-features">
-                        <h3>Key Features</h3>
-                        <ul>
-                            ${project.features.map(feature => `<li>${feature}</li>`).join('')}
-                        </ul>
+                        <div class="schema-item">
+                            <h3>Гипотеза</h3>
+                            <p>${project.hypothesis}</p>
+                        </div>
+                        <div class="schema-item">
+                            <h3>Решения (UI/анимации)</h3>
+                            <p>${project.solutions}</p>
+                        </div>
+                        <div class="schema-item">
+                            <h3>Техстек</h3>
+                            <div class="tech-tags">
+                                ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="schema-item">
+                            <h3>Результат</h3>
+                            <p>${project.result}</p>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="project-gallery-section">
                     <h3>Скриншоты проекта</h3>
                     <div class="gallery-grid">
-                        ${project.images.map((img, index) => `<img src="${img}" alt="Скриншот проекта" class="gallery-img" onclick="openGallery(${JSON.stringify(project.images)}, '${project.title}')">`).join('')}
+                        ${project.screenshots.map((img, index) => `<img src="${img}" alt="Скриншот проекта" class="gallery-img" onclick="openGallery(${JSON.stringify(project.screenshots)}, '${project.name}')">`).join('')}
                     </div>
                 </div>
             </div>
@@ -473,9 +680,39 @@ function flipDiploma(card) {
     card.classList.toggle('flipped');
 }
 
-function downloadDiploma(diplomaId) {
-    showNotification('Загрузка диплома началась!', 'success');
-    // In a real implementation, this would download the actual PDF
+function scrollToProject(projectId) {
+    const projectsSection = document.querySelector('#projects');
+    projectsSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+    
+    // Highlight the specific project after scrolling
+    setTimeout(() => {
+        const projectCard = document.querySelector(`[data-category*="${projectId}"]`);
+        if (projectCard) {
+            projectCard.style.transform = 'scale(1.05)';
+            projectCard.style.boxShadow = '0 8px 32px rgba(30, 79, 255, 0.3)';
+            setTimeout(() => {
+                projectCard.style.transform = '';
+                projectCard.style.boxShadow = '';
+            }, 2000);
+        }
+    }, 500);
+}
+
+function toggleFAQ(index) {
+    const answer = document.getElementById(`faq-answer-${index}`);
+    const question = answer.previousElementSibling;
+    const icon = question.querySelector('i');
+    
+    if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        answer.style.display = 'block';
+        icon.style.transform = 'rotate(180deg)';
+    }
 }
 
 function showNotification(message, type = 'info') {
@@ -579,6 +816,56 @@ notificationStyles.textContent = `
         margin-bottom: 0.5rem;
     }
     
+    .project-flagship-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--gradient-accent);
+        color: var(--text-primary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+    }
+    
+    .project-flagship-indicator i {
+        color: #FFD700;
+    }
+    
+    .project-schema {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .schema-item {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        transition: var(--transition-medium);
+    }
+    
+    .schema-item:hover {
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-secondary);
+    }
+    
+    .schema-item h3 {
+        color: var(--accent-primary);
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .schema-item p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin: 0;
+    }
+    
     .project-category {
         color: var(--accent-primary);
         font-weight: 600;
@@ -633,12 +920,6 @@ notificationStyles.textContent = `
         left: 0;
     }
     
-    .gallery-placeholder {
-        text-align: center;
-        color: var(--text-muted);
-        margin-bottom: 2rem;
-    }
-    
     .gallery-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -685,15 +966,6 @@ notificationStyles.textContent = `
         .gallery-img {
             max-height: 200px;
         }
-    }
-    
-    .gallery-item {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        padding: 2rem 1rem;
-        color: var(--text-muted);
-        font-size: 0.9rem;
     }
 `;
 document.head.appendChild(notificationStyles);
