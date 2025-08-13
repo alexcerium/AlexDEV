@@ -177,9 +177,65 @@ body {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Hero Animation States */
+.hero-portrait {
+    opacity: 0;
+    transform: scale(1.05);
+    animation: heroPortraitFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.2s;
+}
+
+.hero-title {
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeInUp 1s ease forwards 0.5s;
+    animation: heroTextFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.4s;
+}
+
+.hero-subtitle {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroTextFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.55s;
+}
+
+.hero-buttons {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: heroButtonsFade 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.7s;
+}
+
+/* Hero Animation Keyframes */
+@keyframes heroPortraitFade {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes heroTextFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroButtonsFade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-text {
@@ -372,6 +428,23 @@ section {
     color: var(--text-secondary);
     transition: var(--transition-fast);
     cursor: default;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.skill-badge.animate {
+    animation: skillTileFade 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes skillTileFade {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .skill-badge:hover {
@@ -418,15 +491,51 @@ section {
     border: 1px solid var(--border-color);
     border-radius: 16px;
     overflow: hidden;
-    transition: var(--transition-medium);
     cursor: pointer;
     transform-style: preserve-3d;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+.project-card.animate {
+    animation: projectCardReveal 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .project-card:hover {
-    transform: translateY(-8px) rotateX(2deg);
-    border-color: var(--accent-primary);
-    box-shadow: var(--shadow-secondary);
+    transform: scale(1.02) translateY(-4px);
+    box-shadow: 0 20px 40px rgba(30, 79, 255, 0.15);
+}
+
+/* Project Card Spotlight Effect */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+@keyframes projectCardReveal {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .project-image {
@@ -452,18 +561,46 @@ section {
 
 .project-content {
     padding: 1.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .project-content h3 {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-card:hover .project-content h3 {
+    transform: translateY(-4px);
 }
 
 .project-content p {
     color: var(--text-secondary);
     margin-bottom: 1rem;
     line-height: 1.6;
+    opacity: 0.8;
+    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-card:hover .project-content p {
+    opacity: 1;
+}
+
+.project-role {
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.project-card:hover .project-role {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .project-btn {
@@ -995,6 +1132,178 @@ section {
     color: var(--accent-primary);
 }
 
+/* Featured Project Section */
+.featured-project {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.featured-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000000;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-project.active .featured-background {
+    opacity: 1;
+}
+
+.featured-container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.featured-content {
+    text-align: center;
+    color: white;
+}
+
+.featured-header {
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-project.active .featured-header {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.featured-header h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, #1E4FFF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.featured-header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.featured-showcase {
+    position: relative;
+    margin-bottom: 4rem;
+}
+
+.featured-image-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.featured-image-container img {
+    max-width: 80%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-project.active .featured-image-container img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.featured-metrics {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.metric-item {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    pointer-events: none;
+}
+
+.metric-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.metric-item.top-left {
+    top: 10%;
+    left: 5%;
+}
+
+.metric-item.top-right {
+    top: 10%;
+    right: 5%;
+}
+
+.metric-item.bottom-left {
+    bottom: 20%;
+    left: 5%;
+}
+
+.metric-item.bottom-right {
+    bottom: 20%;
+    right: 5%;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1E4FFF;
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.metric-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.4;
+}
+
+.featured-cta {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.featured-project.active .featured-cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Contact Section */
 .contact-content {
     max-width: 800px;
@@ -1246,6 +1555,14 @@ section {
     transform: translateY(0);
 }
 
+/* Fade In Up Animation (for backward compatibility) */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
@@ -1493,6 +1810,55 @@ section {
     
     .footer-links {
         justify-content: center;
+    }
+    
+    /* Animation adjustments for mobile */
+    .hero-portrait {
+        animation-duration: 0.6s;
+    }
+    
+    .hero-title,
+    .hero-subtitle,
+    .hero-buttons {
+        animation-duration: 0.6s;
+    }
+    
+    .skill-badge.animate {
+        animation-duration: 0.5s;
+    }
+    
+    /* Featured project mobile adjustments */
+    .featured-header h2 {
+        font-size: 2rem;
+    }
+    
+    .featured-header p {
+        font-size: 1rem;
+    }
+    
+    .featured-image-container img {
+        max-width: 95%;
+    }
+    
+    .metric-item {
+        position: relative;
+        margin: 1rem 0;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .metric-label {
+        font-size: 0.9rem;
+    }
+    
+    .metric-description {
+        font-size: 0.8rem;
     }
 }
 

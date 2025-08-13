@@ -28,7 +28,25 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeMagneticEffects();
     initializeScrollReveal();
     initializeGallery();
+    
+    // Check for reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        disableAnimations();
+    }
 });
+
+// Disable animations for users who prefer reduced motion
+function disableAnimations() {
+    const style = document.createElement('style');
+    style.textContent = `
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
 
 // Site Initialization
 function initializeSite() {
@@ -62,6 +80,7 @@ function initializeSite() {
     initializeFAQ();
     initializeLegal();
     initializeFooter();
+    initializeFeaturedProject();
 }
 
 // Navigation Initialization
@@ -123,15 +142,15 @@ function initializeProjects() {
     // Initialize projects
     if (projectsGrid) {
         projectsGrid.innerHTML = window.SITE.projects.map(project => `
-            <div class="project-card" data-category="${project.category.join(' ')}">
+            <div class="project-card" data-category="${project.category.join(' ')}" onclick="openProjectModal('${project.id}')">
                 <div class="project-image">
                     <img src="${project.preview}" alt="${project.name}" class="project-img">
                     ${project.isFlagship ? '<div class="project-flagship-badge"><i class="fas fa-star"></i></div>' : ''}
                 </div>
                 <div class="project-content">
+                    <div class="project-role">${project.category.includes('ios-apps') ? 'iOS Приложение' : 'Веб-сайт'}</div>
                     <h3>${project.name}</h3>
                     <p>${project.problem}</p>
-                    <button class="project-btn" onclick="openProjectModal('${project.id}')">Подробнее</button>
                 </div>
             </div>
         `).join('');
@@ -297,6 +316,93 @@ function initializeFooter() {
     }
 }
 
+// Featured Project Section Initialization
+function initializeFeaturedProject() {
+    const featuredTitle = document.getElementById('featuredTitle');
+    const featuredSubtitle = document.getElementById('featuredSubtitle');
+    const featuredImage = document.getElementById('featuredImage');
+    const featuredMetrics = document.getElementById('featuredMetrics');
+    
+    if (featuredTitle) featuredTitle.textContent = window.SITE.projects.find(p => p.id === 'coffeedaily')?.name || 'CoffeeDaily';
+    if (featuredSubtitle) featuredSubtitle.textContent = 'Флагман-кейс: iOS приложение для отслеживания кофе';
+    if (featuredImage) featuredImage.src = window.SITE.projects.find(p => p.id === 'coffeedaily')?.preview || 'assets/coffeedaily-preview.png';
+    
+    if (featuredMetrics) {
+        const metrics = [
+            { value: '95%', label: 'Удовлетворенность', description: 'Пользователи довольны интерфейсом' },
+            { value: '2.3x', label: 'Скорость', description: 'Быстрее аналогов' },
+            { value: '4.8★', label: 'Рейтинг', description: 'В App Store' },
+            { value: '10k+', label: 'Загрузки', description: 'Активных пользователей' }
+        ];
+        
+        const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+        featuredMetrics.innerHTML = metrics.map((metric, index) => `
+            <div class="metric-item ${positions[index]}" data-index="${index}">
+                <div class="metric-value">${metric.value}</div>
+                <div class="metric-label">${metric.label}</div>
+                <div class="metric-description">${metric.description}</div>
+            </div>
+        `).join('');
+    }
+    
+    // Initialize featured project scroll animations
+    initializeFeaturedProjectAnimations();
+}
+
+// Featured Project Scroll Animations
+function initializeFeaturedProjectAnimations() {
+    const featuredSection = document.querySelector('.featured-project');
+    if (!featuredSection) return;
+    
+    let isAnimating = false;
+    let currentMetricIndex = 0;
+    const metrics = document.querySelectorAll('.metric-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isAnimating) {
+                startFeaturedAnimation();
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    observer.observe(featuredSection);
+    
+    function startFeaturedAnimation() {
+        isAnimating = true;
+        featuredSection.classList.add('active');
+        
+        // Start metrics animation sequence
+        setTimeout(() => {
+            animateMetrics();
+        }, 2000); // Wait for initial fade-in
+    }
+    
+    function animateMetrics() {
+        if (currentMetricIndex >= metrics.length) {
+            // Animation complete, show CTA
+            setTimeout(() => {
+                document.querySelector('.featured-cta').classList.add('active');
+            }, 1000);
+            return;
+        }
+        
+        const currentMetric = metrics[currentMetricIndex];
+        currentMetric.classList.add('active');
+        
+        // Hide metric after 3 seconds
+        setTimeout(() => {
+            currentMetric.classList.remove('active');
+            currentMetricIndex++;
+            
+            // Show next metric after 500ms
+            setTimeout(() => {
+                animateMetrics();
+            }, 500);
+        }, 3000);
+    }
+}
+
 // Navbar Functionality
 function initializeNavbar() {
     // Mobile menu toggle
@@ -334,7 +440,7 @@ function initializeNavbar() {
                     block: 'start'
                 });
             }
-        }
+            }
     });
 }
 
@@ -403,7 +509,7 @@ function initializeModals() {
             } else {
                 e.target.closest('.modal').style.display = 'none';
             }
-        }
+            }
     });
 
     // Close modals with Escape key
@@ -517,10 +623,52 @@ function initializeScrollReveal() {
     }, observerOptions);
 
     // Observe elements for reveal animation
-    const revealElements = document.querySelectorAll('.section-title, .about-content, .skills-grid, .project-card, .education-item, .contact-content');
+    const revealElements = document.querySelectorAll('.section-title, .about-content, .project-card, .education-item, .contact-content');
     revealElements.forEach(el => {
         el.classList.add('reveal');
         observer.observe(el);
+    });
+    
+    // Special observer for skills grid animation
+    const skillsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkillsGrid();
+                skillsObserver.unobserve(entry.target); // Only trigger once
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
+    
+    const skillsGrid = document.querySelector('.skills-grid');
+    if (skillsGrid) {
+        skillsObserver.observe(skillsGrid);
+    }
+    
+    // Special observer for project cards animation
+    const projectCardsObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add('animate');
+                }, index * 80); // 80ms delay between each card
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
+    
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        projectCardsObserver.observe(card);
+    });
+}
+
+// Skills Grid Animation
+function animateSkillsGrid() {
+    const skillBadges = document.querySelectorAll('.skill-badge');
+    
+    skillBadges.forEach((badge, index) => {
+        setTimeout(() => {
+            badge.classList.add('animate');
+        }, index * 100); // 100ms delay between each tile
     });
 }
 
@@ -652,20 +800,20 @@ function openProjectModal(projectId) {
                         </div>
                         <div class="schema-item">
                             <h3>Техстек</h3>
-                            <div class="tech-tags">
+                <div class="tech-tags">
                                 ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
-                            </div>
-                        </div>
+                </div>
+            </div>
                         <div class="schema-item">
                             <h3>Результат</h3>
                             <p>${project.result}</p>
                         </div>
                     </div>
-                </div>
-                
+            </div>
+            
                 <div class="project-gallery-section">
-                    <h3>Скриншоты проекта</h3>
-                    <div class="gallery-grid">
+                <h3>Скриншоты проекта</h3>
+                <div class="gallery-grid">
                         ${project.screenshots.map((img, index) => `<img src="${img}" alt="Скриншот проекта" class="gallery-img" onclick="openGallery(${JSON.stringify(project.screenshots)}, '${project.name}')">`).join('')}
                     </div>
                 </div>
@@ -956,11 +1104,11 @@ notificationStyles.textContent = `
         
         .project-gallery-section {
             min-height: 300px;
-        }
-        
-        .gallery-grid {
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
         }
         
         .gallery-img {
