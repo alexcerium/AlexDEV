@@ -1,12 +1,21 @@
-// DOM Elements
-const navbar = document.querySelector('.navbar');
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
-const navLinks = document.querySelectorAll('.nav-link');
-const projectCards = document.querySelectorAll('.project-card');
-const filterBtns = document.querySelectorAll('.filter-btn');
-const projectModal = document.getElementById('projectModal');
-const galleryModal = document.getElementById('galleryModal');
+// DOM Cache
+const DOM = {
+    navbar: document.querySelector('.navbar'),
+    hamburger: document.querySelector('.hamburger'),
+    navMenu: document.querySelector('.nav-menu'),
+    navLinks: document.querySelectorAll('.nav-link'),
+    projectCards: document.querySelectorAll('.project-card'),
+    filterBtns: document.querySelectorAll('.filter-btn'),
+    projectModal: document.getElementById('projectModal'),
+    galleryModal: document.getElementById('galleryModal')
+};
+
+// Utility Functions
+function staggerAnimation(elements, delay = 100, animationClass = 'animate') {
+    elements.forEach((el, index) => {
+        setTimeout(() => el.classList.add(animationClass), index * delay);
+    });
+}
 
 // Gallery state
 let currentGalleryImages = [];
@@ -482,25 +491,25 @@ function initializeFeaturedProjectAnimations() {
 // Navbar Functionality
 function initializeNavbar() {
     // Mobile menu toggle
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+    DOM.hamburger.addEventListener('click', () => {
+        DOM.hamburger.classList.toggle('active');
+        DOM.navMenu.classList.toggle('active');
     });
 
     // Close mobile menu when clicking on a link
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('nav-link')) {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+            DOM.hamburger.classList.remove('active');
+            DOM.navMenu.classList.remove('active');
         }
     });
 
     // Navbar background on scroll
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
-            navbar.style.background = 'rgba(10, 10, 11, 0.98)';
+            DOM.navbar.style.background = 'rgba(10, 10, 11, 0.98)';
         } else {
-            navbar.style.background = 'rgba(10, 10, 11, 0.95)';
+            DOM.navbar.style.background = 'rgba(10, 10, 11, 0.95)';
         }
     });
 
@@ -728,12 +737,7 @@ function initializeScrollReveal() {
 // Skills Grid Animation
 function animateSkillsGrid() {
     const skillBadges = document.querySelectorAll('.skill-badge');
-    
-    skillBadges.forEach((badge, index) => {
-        setTimeout(() => {
-            badge.classList.add('animate');
-        }, index * 100); // 100ms delay between each tile
-    });
+    staggerAnimation(skillBadges, 100, 'animate');
 }
 
 // Gallery Functions

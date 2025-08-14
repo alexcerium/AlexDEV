@@ -22,6 +22,24 @@
     --transition-fast: 200ms ease;
     --transition-medium: 300ms ease;
     --transition-slow: 400ms ease;
+    
+    /* Consolidated transitions */
+    --transition-smooth: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-medium-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-slow-smooth: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-very-slow: 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    /* Border radius */
+    --border-radius-small: 8px;
+    --border-radius-medium: 12px;
+    --border-radius-large: 16px;
+    
+    /* Shadows */
+    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-medium: 0 8px 32px rgba(30, 79, 255, 0.2);
+    --shadow-heavy: 0 20px 40px rgba(30, 79, 255, 0.15);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-modal: 0 40px 80px rgba(0, 0, 0, 0.5);
 }
 
 html {
@@ -514,14 +532,14 @@ section {
 .project-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     overflow: hidden;
     cursor: pointer;
     transform-style: preserve-3d;
     /* Start in final position to prevent layout shifts */
     opacity: 0;
     transform: translateY(0);
-    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-medium-smooth);
     position: relative;
     /* Optimize rendering performance */
     will-change: opacity;
@@ -538,7 +556,7 @@ section {
 .project-card:hover {
     transform: scale(1.02) translateY(-4px);
     box-shadow: 0 20px 40px rgba(30, 79, 255, 0.15);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-smooth);
 }
 
 /* Project Card Spotlight Effect */
@@ -551,7 +569,7 @@ section {
     bottom: 0;
     background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
     opacity: 0;
-    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-medium-smooth);
     pointer-events: none;
     z-index: 1;
 }
@@ -578,7 +596,7 @@ section {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-smooth);
     /* Prevent layout shifts */
     display: block;
     max-width: 100%;
@@ -598,7 +616,7 @@ section {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-smooth);
 }
 
 .project-card:hover .project-content h3 {
@@ -610,7 +628,7 @@ section {
     margin-bottom: 1rem;
     line-height: 1.6;
     opacity: 0.8;
-    transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-smooth);
 }
 
 .project-card:hover .project-content p {
@@ -624,7 +642,7 @@ section {
     margin-bottom: 0.5rem;
     opacity: 0;
     transform: translateY(10px);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-smooth);
 }
 
 .project-card:hover .project-role {
@@ -659,7 +677,7 @@ section {
 .education-item {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     padding: 2rem;
     display: flex;
     align-items: center;
@@ -792,7 +810,7 @@ section {
     width: 100%;
     height: 100%;
     text-align: center;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-very-slow);
     transform-style: preserve-3d;
     transform: rotateY(0deg);
 }
@@ -913,7 +931,7 @@ section {
 .service-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     padding: 2rem;
     transition: var(--transition-medium);
     text-align: center;
@@ -984,7 +1002,7 @@ section {
     gap: 1.5rem;
     opacity: 0;
     transform: translateY(50px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-slow-smooth);
 }
 
 .process-step.animate {
@@ -1022,7 +1040,7 @@ section {
 .process-sla {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     padding: 2rem;
     text-align: center;
 }
@@ -1094,7 +1112,7 @@ section {
 
 .faq-question i {
     color: var(--accent-primary);
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-smooth);
 }
 
 .faq-answer {
@@ -1104,7 +1122,7 @@ section {
     max-height: 0;
     overflow: hidden;
     transform: translateY(-10px);
-    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-medium-smooth);
 }
 
 .faq-answer.show {
@@ -1138,7 +1156,7 @@ section {
 .legal-content {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     padding: 2rem;
     font-size: 0.9rem;
     max-height: 60vh;
@@ -1212,7 +1230,7 @@ section {
     bottom: 0;
     background: #000000;
     opacity: 0;
-    transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-very-slow);
 }
 
 .featured-project.active .featured-background {
@@ -1236,7 +1254,7 @@ section {
     margin-bottom: 4rem;
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-very-slow);
 }
 
 .featured-project.active .featured-header {
@@ -1279,7 +1297,7 @@ section {
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
     opacity: 0;
     transform: scale(0.9);
-    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-slow-smooth);
 }
 
 .featured-project.active .featured-image-container img {
@@ -1301,12 +1319,12 @@ section {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     padding: 1.5rem;
     text-align: center;
     opacity: 0;
     transform: translateY(20px);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-slow-smooth);
     pointer-events: none;
 }
 
@@ -1358,7 +1376,7 @@ section {
 .featured-cta {
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: var(--transition-very-slow);
 }
 
 .featured-project.active .featured-cta {
@@ -1395,7 +1413,7 @@ section {
     padding: 1.5rem 2rem;
     background: var(--card-bg);
     border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--border-radius-large);
     text-decoration: none;
     color: var(--text-primary);
     transition: var(--transition-medium);
@@ -1684,7 +1702,7 @@ section {
 	background-color: rgba(0, 0, 0, 0.85);
 	margin: 3% auto;
 	padding: 1.5rem;
-	border-radius: 16px;
+	border-radius: var(--border-radius-large);
 	width: 95%;
 	max-width: 1100px;
 	max-height: 90vh;
@@ -1768,13 +1786,7 @@ section {
     transform: translateY(0);
 }
 
-/* Fade In Up Animation (for backward compatibility) */
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
