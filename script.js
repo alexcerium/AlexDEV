@@ -29,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeScrollReveal();
     initializeGallery();
     
+    // Initialize animations
+    initializeDiplomaAnimations();
+    initializeProcessAnimations();
+    
     // Check for reduced motion preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         disableAnimations();
@@ -117,11 +121,18 @@ function initializeHero() {
 function initializeAbout() {
     const aboutDescription = document.getElementById('aboutDescription');
     const skillsGrid = document.getElementById('skillsGrid');
+    const skillsExtendedGrid = document.getElementById('skillsExtendedGrid');
     
     if (aboutDescription) aboutDescription.textContent = window.SITE.about.description;
     
     if (skillsGrid) {
         skillsGrid.innerHTML = window.SITE.skills.map(skill => 
+            `<div class="skill-badge">${skill}</div>`
+        ).join('');
+    }
+    
+    if (skillsExtendedGrid) {
+        skillsExtendedGrid.innerHTML = window.SITE.skillsExtended.map(skill => 
             `<div class="skill-badge">${skill}</div>`
         ).join('');
     }
@@ -144,7 +155,7 @@ function initializeProjects() {
         projectsGrid.innerHTML = window.SITE.projects.map(project => `
             <div class="project-card" data-category="${project.category.join(' ')}" onclick="openProjectModal('${project.id}')">
                 <div class="project-image">
-                    <img src="${project.preview}" alt="${project.name}" class="project-img">
+                    <img src="${project.preview}" alt="${project.name}" class="project-img" loading="lazy">
                     ${project.isFlagship ? '<div class="project-flagship-badge"><i class="fas fa-star"></i></div>' : ''}
                 </div>
                 <div class="project-content">
@@ -154,7 +165,70 @@ function initializeProjects() {
                 </div>
             </div>
         `).join('');
+        
+        // Preload project images to prevent layout shifts
+        preloadProjectImages();
     }
+}
+
+// Preload project images to prevent layout shifts
+function preloadProjectImages() {
+    const projectImages = document.querySelectorAll('.project-img');
+    let loadedImages = 0;
+    const totalImages = projectImages.length;
+    
+    projectImages.forEach(img => {
+        if (img.complete) {
+            loadedImages++;
+            if (loadedImages === totalImages) {
+                // All images loaded, start animations
+                startProjectCardAnimations();
+            }
+        } else {
+            img.addEventListener('load', () => {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    // All images loaded, start animations
+                    startProjectCardAnimations();
+                }
+            });
+            img.addEventListener('error', () => {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                    // All images loaded (including errors), start animations
+                    startProjectCardAnimations();
+                }
+            });
+        }
+    });
+    
+    // Fallback: if no images or all already loaded, start animations immediately
+    if (totalImages === 0) {
+        startProjectCardAnimations();
+    }
+}
+
+// Start project card animations after images are loaded
+function startProjectCardAnimations() {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    // Use IntersectionObserver for smooth reveal animations
+    const projectCardsObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Ensure stable layout before animating
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate');
+                    }, index * 100); // 100ms delay between each card
+                });
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    projectCards.forEach(card => {
+        projectCardsObserver.observe(card);
+    });
 }
 
 // Education Section Initialization
@@ -309,10 +383,12 @@ function initializeFooter() {
     
     if (footerAuthor) footerAuthor.textContent = window.SITE.footer.author;
     
-    if (footerLinks) {
+    if (footerLinks && window.SITE.footer.links.length > 0) {
         footerLinks.innerHTML = window.SITE.footer.links.map(link => 
             `<a href="${link.href}" class="footer-link">${link.text}</a>`
         ).join('');
+    } else if (footerLinks) {
+        footerLinks.style.display = 'none';
     }
 }
 
@@ -639,26 +715,14 @@ function initializeScrollReveal() {
         });
     }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
     
-    const skillsGrid = document.querySelector('.skills-grid');
-    if (skillsGrid) {
-        skillsObserver.observe(skillsGrid);
-    }
-    
-    // Special observer for project cards animation
-    const projectCardsObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.classList.add('animate');
-                }, index * 80); // 80ms delay between each card
-            }
-        });
-    }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
-    
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        projectCardsObserver.observe(card);
+    const skillsGrids = document.querySelectorAll('.skills-grid');
+    skillsGrids.forEach(grid => {
+        if (grid) {
+            skillsObserver.observe(grid);
+        }
     });
+    
+
 }
 
 // Skills Grid Animation
@@ -771,55 +835,73 @@ function scrollToContact() {
 }
 
 function openProjectModal(projectId) {
-    const project = window.SITE.projects.find(p => p.id === projectId);
+	const project = window.SITE.projects.find(p => p.id === projectId);
     if (!project) return;
     
-    const modalContent = document.getElementById('modalContent');
-    modalContent.innerHTML = `
-        <div class="project-modal">
-            <div class="project-modal-header">
-                <h2>${project.name}</h2>
-                <p class="project-category">${project.category.join(' ')}</p>
-                ${project.isFlagship ? '<div class="project-flagship-indicator"><i class="fas fa-star"></i> Флагман-кейс</div>' : ''}
-            </div>
-            
-            <div class="project-modal-content">
-                <div class="project-info-section">
-                    <div class="project-schema">
-                        <div class="schema-item">
-                            <h3>Проблема</h3>
-                            <p>${project.problem}</p>
-                        </div>
-                        <div class="schema-item">
-                            <h3>Гипотеза</h3>
-                            <p>${project.hypothesis}</p>
-                        </div>
-                        <div class="schema-item">
-                            <h3>Решения (UI/анимации)</h3>
-                            <p>${project.solutions}</p>
-                        </div>
-                        <div class="schema-item">
-                            <h3>Техстек</h3>
-                <div class="tech-tags">
-                                ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+	const screenshots = Array.isArray(project.screenshots) ? project.screenshots.slice(0, 3) : [];
+	const pairTexts = [
+		[
+			{ title: 'Контекст', body: project.context || project.description || project.problem || '' },
+			{ title: 'Проблема', body: project.problem || '' }
+		],
+		[
+			{ title: 'Гипотеза', body: project.hypothesis || '' }
+		],
+		[
+			{ title: 'Решение', body: project.solutions || project.solution || '' },
+			{ title: 'Результат', body: project.result || '' }
+		]
+	];
+
+	const slidesHtml = screenshots.map((src, idx) => {
+		const blocks = (pairTexts[idx] || []).filter(b => b.body && b.body.trim().length > 0);
+		return `
+			<section class="modal-slide" data-slide-index="${idx}">
+				<div class="modal-slide__media">
+					<img src="${src}" alt="${project.name} — экран ${idx + 1}" onclick="openGallery(${JSON.stringify(screenshots)}, '${project.name}')">
                 </div>
+				<div class="modal-slide__text">
+					${blocks.map(b => `
+						<div class="story-textblock">
+							<div class="story-textblock__title">${b.title}</div>
+							<div class="story-textblock__body">${b.body}</div>
             </div>
-                        <div class="schema-item">
-                            <h3>Результат</h3>
-                            <p>${project.result}</p>
-                        </div>
-                    </div>
+					`).join('')}
             </div>
-            
-                <div class="project-gallery-section">
-                <h3>Скриншоты проекта</h3>
-                <div class="gallery-grid">
-                        ${project.screenshots.map((img, index) => `<img src="${img}" alt="Скриншот проекта" class="gallery-img" onclick="openGallery(${JSON.stringify(project.screenshots)}, '${project.name}')">`).join('')}
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
+			</section>
+		`;
+	}).join('');
+
+	const shell = document.getElementById('projectModalContent');
+	shell.innerHTML = `
+		<span class="close" aria-label="Close">&times;</span>
+		<header class="story-modal__header">
+			<h2 class="story-modal__title">${project.name}</h2>
+			<p class="story-modal__subtitle">${project.category.includes('ios-apps') ? 'iOS Приложение' : 'Веб-сайт'}</p>
+		</header>
+		<div class="project-slides" id="projectSlides">${slidesHtml}</div>
+		${(project.tech && project.tech.length) ? `
+			<div class="story-tags">${project.tech.map(t => `<span class="story-tag">${t}</span>`).join('')}</div>
+		` : ''}
+	`;
+
+	// Rebind close listeners for the new close element
+	shell.querySelector('.close').addEventListener('click', () => { projectModal.style.display = 'none'; });
+
+	// Reveal slides as they enter viewport
+	const slides = shell.querySelectorAll('.modal-slide');
+	let revealIndex = 0;
+	const io = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+			if (entry.isIntersecting) {
+				const el = entry.target;
+				setTimeout(() => { el.classList.add('is-visible'); }, revealIndex * 120);
+				revealIndex++;
+				io.unobserve(el);
+			}
+		});
+	}, { threshold: 0.35, root: document.getElementById('projectSlides') });
+	slides.forEach(s => io.observe(s));
     
     projectModal.style.display = 'block';
 }
@@ -849,16 +931,32 @@ function scrollToProject(projectId) {
     }, 500);
 }
 
+
 function toggleFAQ(index) {
     const answer = document.getElementById(`faq-answer-${index}`);
     const question = answer.previousElementSibling;
     const icon = question.querySelector('i');
     
-    if (answer.style.display === 'block') {
-        answer.style.display = 'none';
+    if (answer.classList.contains('show')) {
+        // Closing: animate out
+        answer.style.opacity = '0';
+        answer.style.maxHeight = '0';
+        answer.style.transform = 'translateY(-10px)';
         icon.style.transform = 'rotate(0deg)';
+        
+        setTimeout(() => {
+            answer.classList.remove('show');
+        }, 400); // Match transition duration
     } else {
-        answer.style.display = 'block';
+        // Opening: animate in
+        answer.classList.add('show');
+        
+        // Force reflow to ensure the class is applied before animating
+        answer.offsetHeight;
+        
+        answer.style.opacity = '1';
+        answer.style.maxHeight = '500px';
+        answer.style.transform = 'translateY(0)';
         icon.style.transform = 'rotate(180deg)';
     }
 }
@@ -1136,3 +1234,33 @@ function throttle(func, limit) {
 window.addEventListener('scroll', throttle(() => {
     // Scroll effects are already handled in initializeScrollEffects
 }, 16)); // ~60fps
+
+// Initialize diploma click interactions (no auto-rotation)
+function initializeDiplomaAnimations() {
+    // No automatic animations - diplomas only rotate on click
+    // The flipDiploma function handles click-based rotation
+}
+
+// Initialize process step animations
+function initializeProcessAnimations() {
+    const processObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const steps = entry.target.querySelectorAll('.process-step');
+                steps.forEach((step, index) => {
+                    setTimeout(() => {
+                        step.classList.add('animate');
+                    }, index * 200); // 200ms delay between each step
+                });
+                processObserver.unobserve(entry.target); // Only trigger once
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
+    
+    const processSection = document.querySelector('.process-steps');
+    if (processSection) {
+        processObserver.observe(processSection);
+    }
+}
+
+

@@ -70,9 +70,17 @@
                     <p id="aboutDescription">Меня зовут Александр Маткава. Я создаю iOS-приложения и сайты, уделяя внимание каждой детали. Мне близка идея, что просто — значит гениально, ведь сделать сложное легко, а простое требует настоящего мастерства. Мой путь начался с высшего образования в сфере фармации, где я научился точности, системному мышлению и работе с ответственными задачами. Сегодня эти качества помогают мне разрабатывать цифровые решения, которые работают безупречно и выглядят гармонично.</p>
                 </div>
                 <div class="skills">
-                    <h3>Навыки и технологии</h3>
-                    <div class="skills-grid" id="skillsGrid">
-                        <!-- Skills will be populated by JavaScript -->
+                    <div class="skills-subsection">
+                        <h3>Технологии</h3>
+                        <div class="skills-grid" id="skillsGrid">
+                            <!-- Skills will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="skills-subsection">
+                        <h3>В ходе работы взаимодействовал</h3>
+                        <div class="skills-grid" id="skillsExtendedGrid">
+                            <!-- Extended skills will be populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -186,24 +194,22 @@
     <!-- Legal Pages -->
     <section id="privacy" class="legal-page">
         <div class="container">
-            <div class="legal-content">
-                <h2 id="privacyTitle">Политика конфиденциальности</h2>
-                <div id="privacyContent">
-                    <!-- Privacy content will be populated by JavaScript -->
+            <div class="legal-pages-container">
+                <div class="legal-content legal-privacy">
+                    <h2 id="privacyTitle">Политика конфиденциальности</h2>
+                    <div id="privacyContent">
+                        <!-- Privacy content will be populated by JavaScript -->
+                    </div>
+                    <a href="#" class="btn btn-secondary" onclick="history.back()">← Назад</a>
                 </div>
-                <a href="#" class="btn btn-secondary" onclick="history.back()">← Назад</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="terms" class="legal-page">
-        <div class="container">
-            <div class="legal-content">
-                <h2 id="termsTitle">Условия использования</h2>
-                <div id="termsContent">
-                    <!-- Terms content will be populated by JavaScript -->
+                
+                <div class="legal-content legal-terms">
+                    <h2 id="termsTitle">Условия использования</h2>
+                    <div id="termsContent">
+                        <!-- Terms content will be populated by JavaScript -->
+                    </div>
+                    <a href="#" class="btn btn-secondary" onclick="history.back()">← Назад</a>
                 </div>
-                <a href="#" class="btn btn-secondary" onclick="history.back()">← Назад</a>
             </div>
         </div>
     </section>
@@ -223,10 +229,10 @@
     </footer>
 
     <!-- Project Modal -->
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="modalContent"></div>
+    <div id="projectModal" class="modal" aria-modal="true" role="dialog">
+        <div class="modal-content" id="projectModalContent" role="document">
+            <span class="close" aria-label="Close">&times;</span>
+            <!-- Project slides and header will be injected here directly -->
         </div>
     </div>
 

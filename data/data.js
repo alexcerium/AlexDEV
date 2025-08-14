@@ -27,6 +27,13 @@ window.SITE = {
         "Анимации",
         "Git/GitHub"
     ],
+    
+    // Extended Skills Section (includes additional technologies)
+    skillsExtended: [
+        "HTML",
+        "JS",
+        "Python"
+    ],
 
     // Education Section
     education: [
@@ -270,10 +277,7 @@ window.SITE = {
     // Footer
     footer: {
         author: "Сайт разработан Александром Маткавой",
-        links: [
-            { text: "Privacy Policy", href: "#privacy" },
-            { text: "Terms of Use", href: "#terms" }
-        ]
+        links: []
     },
 
     // Site Meta
