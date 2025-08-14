@@ -1,13 +1,37 @@
 // Site Data Configuration
 window.SITE = {
+    // Site Meta
+    meta: {
+        title: "Александр Маткава — создаю цифровые продукты",
+        description: "Александр - iOS разработчик, специализирующийся на Swift, SwiftUI и современных мобильных приложениях. Эксперт по чистой архитектуре, кастомному UI и оптимизации UX.",
+        keywords: "iOS разработчик, Swift, SwiftUI, мобильная разработка, Александр",
+        author: "Александр"
+    },
+
+    // UI Text
+    ui: {
+        navLogo: "Александр",
+        downloadResumeText: "Скачать резюме",
+        contactMeText: "Связаться со мной",
+        aboutTitle: "Обо мне",
+        skillsTitle: "Технологии",
+        skillsExtendedTitle: "В ходе работы взаимодействовал",
+        projectsTitle: "Проекты",
+        featuredCtaText: "Подробнее о проекте",
+        educationTitle: "Образование",
+        contactTitle: "Связаться со мной",
+        backButtonText: "В начало",
+        galleryTitle: "Галерея проекта"
+    },
+
     // Hero Section
     hero: {
-        title: "Александр Маткава — iOS разработчик",
-        subtitle: "Создаю продуманные и современные мобильные приложения",
+        title: "Александр Маткава — создаю цифровые продукты",
+        subtitle: "iOS-приложения, сайты и дизайн -  от идеи до готового продукта",
         portrait: "assets/Portrait.jpeg",
         flagship: {
             show: true,
-            text: "Флагман-кейс: CoffeeDaily"
+            text: "Избранное: CoffeeDaily"
         }
     },
 
@@ -20,9 +44,17 @@ window.SITE = {
     skills: [
         "Swift",
         "SwiftUI", 
-        "MVVM",
+        "API",
+        "JSON / Codable",
+        "URLSession",
+        "Alamofire",
+        "Kingfisher",
         "Combine",
-        "REST API",
+        "Core Data / Realm",
+        "SwiftData",
+        "AVKit / Core Image",
+        "Xcode Instruments",
+        "HIG",
         "UI/UX Design",
         "Анимации",
         "Git/GitHub"
@@ -30,9 +62,14 @@ window.SITE = {
     
     // Extended Skills Section (includes additional technologies)
     skillsExtended: [
+        "Figma",
         "HTML",
-        "JS",
-        "Python"
+        "JavaScript",
+        "Python",
+        "Webflow",
+        "Firebase",
+        "API интеграции",
+        "Postman"
     ],
 
     // Education Section
@@ -119,6 +156,15 @@ window.SITE = {
             result: "Быстрый сайт для портфолио/резюме с конверсионной структурой."
         }
     ],
+
+    // Featured Project Section
+    featured: {
+        title: "CoffeeDaily",
+        subtitle: "Флагман-кейс: iOS приложение для отслеживания кофе",
+        image: "assets/coffeedaily-preview.png",
+        imageAlt: "CoffeeDaily App",
+        ctaText: "Подробнее о проекте"
+    },
 
     // Services Section
     services: {
@@ -278,13 +324,5 @@ window.SITE = {
     footer: {
         author: "Сайт разработан Александром Маткавой",
         links: []
-    },
-
-    // Site Meta
-    meta: {
-        title: "Александр — iOS разработчик",
-        description: "Александр - iOS разработчик, специализирующийся на Swift, SwiftUI и современных мобильных приложениях. Эксперт по чистой архитектуре, кастомному UI и оптимизации UX.",
-        keywords: "iOS разработчик, Swift, SwiftUI, мобильная разработка, Александр",
-        author: "Александр"
     }
 };

@@ -65,9 +65,13 @@ function disableAnimations() {
 function initializeSite() {
     // Update meta tags
     document.title = window.SITE.meta.title;
-    document.querySelector('meta[name="description"]').setAttribute('content', window.SITE.meta.description);
-    document.querySelector('meta[name="keywords"]').setAttribute('content', window.SITE.meta.keywords);
-    document.querySelector('meta[name="author"]').setAttribute('content', window.SITE.meta.author);
+    document.getElementById('metaDescription').setAttribute('content', window.SITE.meta.description);
+    document.getElementById('metaKeywords').setAttribute('content', window.SITE.meta.keywords);
+    document.getElementById('metaAuthor').setAttribute('content', window.SITE.meta.author);
+    document.getElementById('pageTitle').textContent = window.SITE.meta.title;
+    
+    // Initialize UI text
+    initializeUIText();
     
     // Initialize navigation
     initializeNavigation();
@@ -96,6 +100,44 @@ function initializeSite() {
     initializeFeaturedProject();
 }
 
+// UI Text Initialization
+function initializeUIText() {
+    // Navigation logo
+    const navLogo = document.getElementById('navLogo');
+    if (navLogo) navLogo.textContent = window.SITE.ui.navLogo;
+    
+    // Hero buttons
+    const downloadResumeText = document.getElementById('downloadResumeText');
+    const contactMeText = document.getElementById('contactMeText');
+    if (downloadResumeText) downloadResumeText.textContent = window.SITE.ui.downloadResumeText;
+    if (contactMeText) contactMeText.textContent = window.SITE.ui.contactMeText;
+    
+    // Section titles
+    const aboutTitle = document.getElementById('aboutTitle');
+    const skillsTitle = document.getElementById('skillsTitle');
+    const skillsExtendedTitle = document.getElementById('skillsExtendedTitle');
+    const projectsTitle = document.getElementById('projectsTitle');
+    const educationTitle = document.getElementById('educationTitle');
+    const contactTitle = document.getElementById('contactTitle');
+    
+    if (aboutTitle) aboutTitle.textContent = window.SITE.ui.aboutTitle;
+    if (skillsTitle) skillsTitle.textContent = window.SITE.ui.skillsTitle;
+    if (skillsExtendedTitle) skillsExtendedTitle.textContent = window.SITE.ui.skillsExtendedTitle;
+    if (projectsTitle) projectsTitle.textContent = window.SITE.ui.projectsTitle;
+    if (educationTitle) educationTitle.textContent = window.SITE.ui.educationTitle;
+    if (contactTitle) contactTitle.textContent = window.SITE.ui.contactTitle;
+    
+    // Gallery
+    const galleryTitle = document.getElementById('galleryTitle');
+    if (galleryTitle) galleryTitle.textContent = window.SITE.ui.galleryTitle;
+    
+    // Back buttons
+    const backButtonText = document.getElementById('backButtonText');
+    const backButtonText2 = document.getElementById('backButtonText2');
+    if (backButtonText) backButtonText.textContent = window.SITE.ui.backButtonText;
+    if (backButtonText2) backButtonText2.textContent = window.SITE.ui.backButtonText;
+}
+
 // Navigation Initialization
 function initializeNavigation() {
     const navMenu = document.getElementById('navMenu');
@@ -113,7 +155,10 @@ function initializeHero() {
     
     if (heroTitle) heroTitle.textContent = window.SITE.hero.title;
     if (heroSubtitle) heroSubtitle.textContent = window.SITE.hero.subtitle;
-    if (heroPortrait) heroPortrait.src = window.SITE.hero.portrait;
+    if (heroPortrait) {
+        heroPortrait.src = window.SITE.hero.portrait;
+        heroPortrait.alt = window.SITE.hero.title;
+    }
     
     // Initialize flagship badge
     if (heroFlagship && window.SITE.hero.flagship.show) {
@@ -406,11 +451,16 @@ function initializeFeaturedProject() {
     const featuredTitle = document.getElementById('featuredTitle');
     const featuredSubtitle = document.getElementById('featuredSubtitle');
     const featuredImage = document.getElementById('featuredImage');
+    const featuredCtaText = document.getElementById('featuredCtaText');
     const featuredMetrics = document.getElementById('featuredMetrics');
     
-    if (featuredTitle) featuredTitle.textContent = window.SITE.projects.find(p => p.id === 'coffeedaily')?.name || 'CoffeeDaily';
-    if (featuredSubtitle) featuredSubtitle.textContent = 'Флагман-кейс: iOS приложение для отслеживания кофе';
-    if (featuredImage) featuredImage.src = window.SITE.projects.find(p => p.id === 'coffeedaily')?.preview || 'assets/coffeedaily-preview.png';
+    if (featuredTitle) featuredTitle.textContent = window.SITE.featured.title;
+    if (featuredSubtitle) featuredSubtitle.textContent = window.SITE.featured.subtitle;
+    if (featuredImage) {
+        featuredImage.src = window.SITE.featured.image;
+        featuredImage.alt = window.SITE.featured.imageAlt;
+    }
+    if (featuredCtaText) featuredCtaText.textContent = window.SITE.featured.ctaText;
     
     if (featuredMetrics) {
         const metrics = [
@@ -793,7 +843,7 @@ function updateGalleryThumbnails() {
     currentGalleryImages.forEach((image, index) => {
         const thumbnail = document.createElement('img');
         thumbnail.src = image;
-        thumbnail.alt = `Скриншот ${index + 1}`;
+        thumbnail.alt = `${window.SITE.ui.galleryTitle} ${index + 1}`;
         thumbnail.className = `gallery-thumbnail ${index === currentImageIndex ? 'active' : ''}`;
         thumbnail.onclick = () => {
             currentImageIndex = index;
@@ -822,9 +872,24 @@ function changeImage(direction) {
 // Utility Functions
 function downloadResume() {
     // Create a dummy resume download
+    const resumeContent = `${window.SITE.meta.author} - iOS разработчик резюме
+
+Опыт:
+- iOS разработчик на Swift/SwiftUI
+- MVVM архитектура
+- Кастомный UI/UX дизайн
+- Интеграция API
+- Разработка анимаций
+
+Образование:
+${window.SITE.education.map(edu => `- ${edu.title} - ${edu.year}`).join('\n')}
+
+Навыки:
+${window.SITE.skills.join(', ')}`;
+
     const link = document.createElement('a');
-    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('Александр - iOS разработчик резюме\n\nОпыт:\n- iOS разработчик на Swift/SwiftUI\n- MVVM архитектура\n- Кастомный UI/UX дизайн\n- Интеграция API\n- Разработка анимаций\n\nОбразование:\n- Фармацевт (Высшее образование) - 2020\n- Диплом по программированию - 2022\n\nНавыки:\nSwift, SwiftUI, Combine, Core Data, REST API, Git/GitHub');
-    link.download = 'Александр_Резюме.txt';
+    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(resumeContent);
+    link.download = `${window.SITE.meta.author}_Резюме.txt`;
     link.click();
     
     showNotification('Резюме успешно скачано!', 'success');
