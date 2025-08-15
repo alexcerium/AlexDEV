@@ -141,9 +141,21 @@ function initializeUIText() {
 // Navigation Initialization
 function initializeNavigation() {
     const navMenu = document.getElementById('navMenu');
+    const navFlagship = document.getElementById('navFlagship');
+    
     navMenu.innerHTML = window.SITE.navigation.map(nav => 
         `<li><a href="#${nav.id}" class="nav-link">${nav.text}</a></li>`
     ).join('');
+    
+    // Initialize flagship badge in navbar
+    if (navFlagship && window.SITE.hero.flagship.show) {
+        navFlagship.innerHTML = `
+            <div class="flagship-badge" onclick="scrollToProject('coffeedaily')">
+                <i class="fas fa-star"></i>
+                <span>${window.SITE.hero.flagship.text}</span>
+            </div>
+        `;
+    }
 }
 
 // Hero Section Initialization
@@ -151,23 +163,12 @@ function initializeHero() {
     const heroTitle = document.getElementById('heroTitle');
     const heroSubtitle = document.getElementById('heroSubtitle');
     const heroPortrait = document.getElementById('heroPortrait');
-    const heroFlagship = document.getElementById('heroFlagship');
     
     if (heroTitle) heroTitle.textContent = window.SITE.hero.title;
     if (heroSubtitle) heroSubtitle.textContent = window.SITE.hero.subtitle;
     if (heroPortrait) {
         heroPortrait.src = window.SITE.hero.portrait;
         heroPortrait.alt = window.SITE.hero.title;
-    }
-    
-    // Initialize flagship badge
-    if (heroFlagship && window.SITE.hero.flagship.show) {
-        heroFlagship.innerHTML = `
-            <div class="flagship-badge" onclick="scrollToProject('coffeedaily')">
-                <i class="fas fa-star"></i>
-                <span>${window.SITE.hero.flagship.text}</span>
-            </div>
-        `;
     }
 }
 
@@ -215,7 +216,7 @@ function initializeProjects() {
                 <div class="project-content">
                     <div class="project-role">${project.category.includes('ios-apps') ? 'iOS Приложение' : 'Веб-сайт'}</div>
                     <h3>${project.name}</h3>
-                    <p>${project.problem}</p>
+                    <p>${project.description ? project.description.substring(0, 120) + '...' : ''}</p>
                 </div>
             </div>
         `).join('');
@@ -355,9 +356,11 @@ function initializeServices() {
             <div class="service-card">
                 <div class="service-header">
                     <h3>${service.name}</h3>
-                    <div class="service-price">${service.price}</div>
                 </div>
-                <div class="service-duration">${service.duration}</div>
+                <div class="service-info">
+                    <div class="service-price">${service.price}</div>
+                    <div class="service-duration">${service.duration}</div>
+                </div>
                 <p>${service.description}</p>
             </div>
         `).join('');
@@ -373,8 +376,8 @@ function initializeProcess() {
     if (processTitle) processTitle.textContent = window.SITE.process.title;
     
     if (processSteps) {
-        processSteps.innerHTML = window.SITE.process.steps.map(step => `
-            <div class="process-step">
+        processSteps.innerHTML = window.SITE.process.steps.map((step, index) => `
+            <div class="process-step" data-step="${index}">
                 <div class="step-number">${step.number}</div>
                 <div class="step-content">
                     <h3>${step.title}</h3>
@@ -463,17 +466,16 @@ function initializeFeaturedProject() {
     if (featuredCtaText) featuredCtaText.textContent = window.SITE.featured.ctaText;
     
     if (featuredMetrics) {
-        const metrics = [
-            { value: '95%', label: 'Удовлетворенность', description: 'Пользователи довольны интерфейсом' },
-            { value: '2.3x', label: 'Скорость', description: 'Быстрее аналогов' },
-            { value: '4.8★', label: 'Рейтинг', description: 'В App Store' },
-            { value: '10k+', label: 'Загрузки', description: 'Активных пользователей' }
-        ];
+      const metrics = [
+    { label: 'Быстрое оформление заказа', description: 'В среднем клиент делает заказ за 1 минуту' },
+    { label: 'Рост лояльности', description: 'История заказов стимулирует повторные покупки' },
+    { label: 'Скорость обслуживания', description: 'Клиенты получают заказ без ожидания' },
+    { label: 'Эффективный маркетинг', description: 'Push-уведомления о скидках и акциях без лишних затрат' }
+];
         
         const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
         featuredMetrics.innerHTML = metrics.map((metric, index) => `
             <div class="metric-item ${positions[index]}" data-index="${index}">
-                <div class="metric-value">${metric.value}</div>
                 <div class="metric-label">${metric.label}</div>
                 <div class="metric-description">${metric.description}</div>
             </div>
@@ -633,6 +635,7 @@ function initializeModals() {
     window.addEventListener('click', (e) => {
         if (e.target.classList.contains('modal') && !e.target.classList.contains('gallery-modal')) {
             e.target.style.display = 'none';
+            document.body.style.overflow = ''; // Restore body scroll
         }
     });
 
@@ -643,6 +646,7 @@ function initializeModals() {
                 closeGallery();
             } else {
                 e.target.closest('.modal').style.display = 'none';
+                document.body.style.overflow = ''; // Restore body scroll
             }
             }
     });
@@ -658,6 +662,7 @@ function initializeModals() {
                         modal.style.display = 'none';
                     }
                 });
+                document.body.style.overflow = ''; // Restore body scroll
             }
         }
     });
@@ -758,7 +763,7 @@ function initializeScrollReveal() {
     }, observerOptions);
 
     // Observe elements for reveal animation
-    const revealElements = document.querySelectorAll('.section-title, .about-content, .project-card, .education-item, .contact-content');
+    const revealElements = document.querySelectorAll('.section-title, .about-content, .project-card, .diploma-wrapper, .contact-content');
     revealElements.forEach(el => {
         el.classList.add('reveal');
         observer.observe(el);
@@ -908,35 +913,57 @@ function openProjectModal(projectId) {
     if (!project) return;
     
 	const screenshots = Array.isArray(project.screenshots) ? project.screenshots.slice(0, 3) : [];
-	const pairTexts = [
-		[
-			{ title: 'Контекст', body: project.context || project.description || project.problem || '' },
-			{ title: 'Проблема', body: project.problem || '' }
-		],
-		[
-			{ title: 'Гипотеза', body: project.hypothesis || '' }
-		],
-		[
-			{ title: 'Решение', body: project.solutions || project.solution || '' },
-			{ title: 'Результат', body: project.result || '' }
-		]
+	
+	// Map the three screenshots to the new data structure
+	const slideContent = [
+		{
+			title: 'Описание',
+			content: project.description || '',
+			type: 'description'
+		},
+		{
+			title: 'Возможности',
+			content: project.features || [],
+			type: 'features'
+		},
+		{
+			title: 'Технологии',
+			content: project.tech || [],
+			type: 'tech'
+		}
 	];
 
 	const slidesHtml = screenshots.map((src, idx) => {
-		const blocks = (pairTexts[idx] || []).filter(b => b.body && b.body.trim().length > 0);
+		const slideData = slideContent[idx];
+		let contentHtml = '';
+		
+		if (slideData.type === 'description') {
+			contentHtml = `<div class="story-textblock__body description-text">${slideData.content}</div>`;
+		} else if (slideData.type === 'features' && Array.isArray(slideData.content)) {
+			contentHtml = `
+				<ul class="features-list">
+					${slideData.content.map(feature => `<li>${feature}</li>`).join('')}
+				</ul>
+			`;
+		} else if (slideData.type === 'tech' && Array.isArray(slideData.content)) {
+			contentHtml = `
+				<ul class="tech-list">
+					${slideData.content.map(tech => `<li>${tech}</li>`).join('')}
+				</ul>
+			`;
+		}
+		
 		return `
 			<section class="modal-slide" data-slide-index="${idx}">
 				<div class="modal-slide__media">
 					<img src="${src}" alt="${project.name} — экран ${idx + 1}" onclick="openGallery(${JSON.stringify(screenshots)}, '${project.name}')">
                 </div>
 				<div class="modal-slide__text">
-					${blocks.map(b => `
-						<div class="story-textblock">
-							<div class="story-textblock__title">${b.title}</div>
-							<div class="story-textblock__body">${b.body}</div>
+					<div class="story-textblock">
+						<div class="story-textblock__title">${slideData.title}</div>
+						${contentHtml}
             </div>
-					`).join('')}
-            </div>
+				</div>
 			</section>
 		`;
 	}).join('');
@@ -949,13 +976,13 @@ function openProjectModal(projectId) {
 			<p class="story-modal__subtitle">${project.category.includes('ios-apps') ? 'iOS Приложение' : 'Веб-сайт'}</p>
 		</header>
 		<div class="project-slides" id="projectSlides">${slidesHtml}</div>
-		${(project.tech && project.tech.length) ? `
-			<div class="story-tags">${project.tech.map(t => `<span class="story-tag">${t}</span>`).join('')}</div>
-		` : ''}
 	`;
 
 	// Rebind close listeners for the new close element
-	shell.querySelector('.close').addEventListener('click', () => { projectModal.style.display = 'none'; });
+	shell.querySelector('.close').addEventListener('click', () => { 
+		projectModal.style.display = 'none'; 
+		document.body.style.overflow = ''; // Restore body scroll
+	});
 
 	// Reveal slides as they enter viewport
 	const slides = shell.querySelectorAll('.modal-slide');
@@ -972,6 +999,8 @@ function openProjectModal(projectId) {
 	}, { threshold: 0.35, root: document.getElementById('projectSlides') });
 	slides.forEach(s => io.observe(s));
     
+    // Disable body scroll when modal is open
+    document.body.style.overflow = 'hidden';
     projectModal.style.display = 'block';
 }
 
@@ -1316,12 +1345,23 @@ function initializeProcessAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const steps = entry.target.querySelectorAll('.process-step');
+                // Reset animations first
+                steps.forEach(step => {
+                    step.classList.remove('animate');
+                });
+                
+                // Trigger animations with slower timing
                 steps.forEach((step, index) => {
                     setTimeout(() => {
                         step.classList.add('animate');
-                    }, index * 200); // 200ms delay between each step
+                    }, index * 300); // 300ms delay between each step (slower)
                 });
-                processObserver.unobserve(entry.target); // Only trigger once
+            } else {
+                // Reset animations when section is out of view
+                const steps = entry.target.querySelectorAll('.process-step');
+                steps.forEach(step => {
+                    step.classList.remove('animate');
+                });
             }
         });
     }, { threshold: 0.3, rootMargin: '0px 0px -100px 0px' });
