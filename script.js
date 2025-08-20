@@ -95,7 +95,6 @@ function initializeSite() {
     initializeServices();
     initializeProcess();
     initializeFAQ();
-    initializeLegal();
     initializeFooter();
     initializeFeaturedProject();
 }
@@ -419,34 +418,13 @@ function initializeFAQ() {
     }
 }
 
-// Legal Pages Initialization
-function initializeLegal() {
-    const privacyTitle = document.getElementById('privacyTitle');
-    const privacyContent = document.getElementById('privacyContent');
-    const termsTitle = document.getElementById('termsTitle');
-    const termsContent = document.getElementById('termsContent');
-    
-    if (privacyTitle) privacyTitle.textContent = window.SITE.legal.privacy.title;
-    if (privacyContent) privacyContent.innerHTML = `<p>${window.SITE.legal.privacy.content}</p>`;
-    
-    if (termsTitle) termsTitle.textContent = window.SITE.legal.terms.title;
-    if (termsContent) termsContent.innerHTML = `<p>${window.SITE.legal.terms.content}</p>`;
-}
+
 
 // Footer Initialization
 function initializeFooter() {
     const footerAuthor = document.getElementById('footerAuthor');
-    const footerLinks = document.getElementById('footerLinks');
     
     if (footerAuthor) footerAuthor.textContent = window.SITE.footer.author;
-    
-    if (footerLinks && window.SITE.footer.links.length > 0) {
-        footerLinks.innerHTML = window.SITE.footer.links.map(link => 
-            `<a href="${link.href}" class="footer-link">${link.text}</a>`
-        ).join('');
-    } else if (footerLinks) {
-        footerLinks.style.display = 'none';
-    }
 }
 
 // Featured Project Section Initialization
@@ -876,25 +854,10 @@ function changeImage(direction) {
 
 // Utility Functions
 function downloadResume() {
-    // Create a dummy resume download
-    const resumeContent = `${window.SITE.meta.author} - iOS разработчик резюме
-
-Опыт:
-- iOS разработчик на Swift/SwiftUI
-- MVVM архитектура
-- Кастомный UI/UX дизайн
-- Интеграция API
-- Разработка анимаций
-
-Образование:
-${window.SITE.education.map(edu => `- ${edu.title} - ${edu.year}`).join('\n')}
-
-Навыки:
-${window.SITE.skills.join(', ')}`;
-
+    // Download the actual PDF file
     const link = document.createElement('a');
-    link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(resumeContent);
-    link.download = `${window.SITE.meta.author}_Резюме.txt`;
+    link.href = 'assets/AlexMatkava.pdf';
+    link.download = 'AlexMatkava.pdf';
     link.click();
     
     showNotification('Резюме успешно скачано!', 'success');
