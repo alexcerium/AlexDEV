@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize animations
     initializeDiplomaAnimations();
     initializeProcessAnimations();
+    initializeSkillsAnimations();
     
     // Check for reduced motion preference
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -135,49 +136,70 @@ function initializeUIText() {
     const backButtonText2 = document.getElementById('backButtonText2');
     if (backButtonText) backButtonText.textContent = window.SITE.ui.backButtonText;
     if (backButtonText2) backButtonText2.textContent = window.SITE.ui.backButtonText;
+    
+    // About section button
+    const downloadResumeButtonText = document.getElementById('downloadResumeButtonText');
+    if (downloadResumeButtonText) downloadResumeButtonText.textContent = window.SITE.ui.downloadResumeButtonText;
 }
 
 // Navigation Initialization
 function initializeNavigation() {
     const navMenu = document.getElementById('navMenu');
-    const navFlagship = document.getElementById('navFlagship');
     
-    navMenu.innerHTML = window.SITE.navigation.map(nav => 
-        `<li><a href="#${nav.id}" class="nav-link">${nav.text}</a></li>`
+    navMenu.innerHTML = window.SITE.navigation.map((nav, index) => 
+        `<li class="mobile-nav-item" style="animation-delay: ${(index + 1) * 0.1}s"><a href="#${nav.id}" class="nav-link">${nav.text}</a></li>`
     ).join('');
-    
-    // Initialize flagship badge in navbar
-    if (navFlagship && window.SITE.hero.flagship.show) {
-        navFlagship.innerHTML = `
-            <div class="flagship-badge" onclick="scrollToProject('coffeedaily')">
-                <i class="fas fa-star"></i>
-                <span>${window.SITE.hero.flagship.text}</span>
-            </div>
-        `;
-    }
 }
 
 // Hero Section Initialization
 function initializeHero() {
     const heroTitle = document.getElementById('heroTitle');
     const heroSubtitle = document.getElementById('heroSubtitle');
-    const heroPortrait = document.getElementById('heroPortrait');
+    const heroImage = document.getElementById('heroImage');
     
     if (heroTitle) heroTitle.textContent = window.SITE.hero.title;
     if (heroSubtitle) heroSubtitle.textContent = window.SITE.hero.subtitle;
-    if (heroPortrait) {
-        heroPortrait.src = window.SITE.hero.portrait;
-        heroPortrait.alt = window.SITE.hero.title;
+    if (heroImage) {
+        heroImage.src = window.SITE.hero.heroImage;
+        heroImage.alt = window.SITE.hero.title;
+        
+        // Add floating animation after initial animation completes
+        heroImage.addEventListener('animationend', function() {
+            if (heroImage.style.animationName === 'heroImageSlide') {
+                heroImage.classList.add('loaded');
+            }
+        });
+        
+        // Add subtle mouse tracking effect for enhanced interactivity
+        heroImage.addEventListener('mousemove', function(e) {
+            const rect = heroImage.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            
+            const rotateX = (y / rect.height) * -5;
+            const rotateY = (x / rect.width) * 5;
+            
+            heroImage.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        
+        heroImage.addEventListener('mouseleave', function() {
+            heroImage.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
     }
 }
 
 // About Section Initialization
 function initializeAbout() {
     const aboutDescription = document.getElementById('aboutDescription');
+    const aboutPortrait = document.getElementById('aboutPortrait');
     const skillsGrid = document.getElementById('skillsGrid');
     const skillsExtendedGrid = document.getElementById('skillsExtendedGrid');
     
     if (aboutDescription) aboutDescription.textContent = window.SITE.about.description;
+    if (aboutPortrait) {
+        aboutPortrait.src = window.SITE.about.portrait;
+        aboutPortrait.alt = window.SITE.hero.title;
+    }
     
     if (skillsGrid) {
         skillsGrid.innerHTML = window.SITE.skills.map(skill => 
@@ -534,14 +556,7 @@ function initializeNavbar() {
         }
     });
 
-    // Navbar background on scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            DOM.navbar.style.background = 'rgba(10, 10, 11, 0.98)';
-        } else {
-            DOM.navbar.style.background = 'rgba(10, 10, 11, 0.95)';
-        }
-    });
+
 
     // Smooth scrolling for navigation links
     document.addEventListener('click', (e) => {
@@ -773,6 +788,36 @@ function animateSkillsGrid() {
     staggerAnimation(skillBadges, 100, 'animate');
 }
 
+// Animate skills sections when they become visible
+function initializeSkillsAnimations() {
+    const skillsSections = document.querySelectorAll('.skills-subsection');
+    
+    const skillsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // First animate the section itself
+                entry.target.classList.add('animate');
+                
+                // Then animate the skill badges with a slight delay
+                setTimeout(() => {
+                    const skillBadges = entry.target.querySelectorAll('.skill-badge');
+                    skillBadges.forEach((badge, index) => {
+                        setTimeout(() => {
+                            badge.classList.add('animate');
+                        }, index * 50); // Faster animation (50ms between each badge)
+                    });
+                }, 200); // Wait for section animation to start
+                
+                skillsObserver.unobserve(entry.target); // Only trigger once
+            }
+        });
+    }, { threshold: 0.3, rootMargin: '0px 0px -50px 0px' });
+    
+    skillsSections.forEach(section => {
+        skillsObserver.observe(section);
+    });
+}
+
 // Gallery Functions
 function openGallery(images, title) {
     currentGalleryImages = images;
@@ -866,6 +911,14 @@ function downloadResume() {
 function scrollToContact() {
     const contactSection = document.querySelector('#contact');
     contactSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+function scrollToProjects() {
+    const projectsSection = document.querySelector('#projects');
+    projectsSection.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
     });

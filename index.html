@@ -7,7 +7,13 @@
     <meta name="keywords" content="" id="metaKeywords">
     <meta name="author" content="" id="metaAuthor">
     <title id="pageTitle"></title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/animations.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,20 +23,17 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo-container">
-                <div class="nav-logo" id="navLogo"></div>
-                <div class="nav-flagship" id="navFlagship">
-                    <!-- Flagship badge will be moved here -->
-                </div>
-            </div>
-            <ul class="nav-menu" id="navMenu">
-                <!-- Navigation will be populated by JavaScript -->
-            </ul>
             <div class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
+            <div class="nav-logo-container">
+                <div class="nav-logo" id="navLogo"></div>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <!-- Navigation will be populated by JavaScript -->
+            </ul>
         </div>
     </nav>
 
@@ -39,22 +42,20 @@
         <div class="hero-background"></div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title" id="heroTitle"></h1>
-                    <p class="hero-subtitle" id="heroSubtitle"></p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary magnetic" onclick="downloadResume()">
-                            <span id="downloadResumeText"></span>
-                            <i class="fas fa-download"></i>
-                        </button>
-                        <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
-                            <span id="contactMeText"></span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
+                <h1 class="hero-title" id="heroTitle"></h1>
+                <div class="hero-image">
+                    <img src="" alt="Hero Visual" class="hero-visual" id="heroImage">
                 </div>
-                <div class="hero-photo">
-                    <img src="" alt="" class="hero-portrait" id="heroPortrait">
+                <p class="hero-subtitle" id="heroSubtitle"></p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary magnetic" onclick="scrollToProjects()">
+                        <span id="downloadResumeText"></span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
+                        <span id="contactMeText"></span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -68,10 +69,21 @@
         <div class="container">
             <h2 class="section-title" id="aboutTitle"></h2>
             <div class="about-content">
-                <div class="about-text">
-                    <p id="aboutDescription"></p>
+                <div class="about-main">
+                    <div class="about-portrait">
+                        <img src="" alt="" class="about-portrait-img" id="aboutPortrait">
+                        <div class="about-portrait-button">
+                            <button class="btn btn-primary" onclick="downloadResume()">
+                                <span id="downloadResumeButtonText"></span>
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p id="aboutDescription"></p>
+                    </div>
                 </div>
-                <div class="skills">
+                <div class="skills-container">
                     <div class="skills-subsection">
                         <h3 id="skillsTitle"></h3>
                         <div class="skills-grid" id="skillsGrid">

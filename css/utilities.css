@@ -1,0 +1,1007 @@
+/*
+ * Utilities CSS - Helper Classes and Utility Functions
+ * This file contains utility classes for margins, paddings, colors,
+ * visibility, positioning, and other helper functions.
+ */
+
+/* Responsive Design Utilities */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1.5rem;
+        padding-top: 1rem;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: rgba(10, 10, 11, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        width: 100%;
+        text-align: center;
+        transition: var(--transition-medium);
+        border-top: 1px solid var(--border-color);
+        padding: 2rem 0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 0.5rem 0;
+    }
+    
+    .nav-link {
+        display: block;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: 12px;
+        margin: 0 1rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(30, 79, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .nav-link:hover::before {
+        left: 100%;
+    }
+    
+    .nav-link:hover {
+        background: rgba(30, 79, 255, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(30, 79, 255, 0.2);
+    }
+    
+    .nav-link:active {
+        transform: translateY(0) scale(0.98);
+        background: rgba(30, 79, 255, 0.15);
+    }
+    
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 4px;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        order: -1;
+        margin-right: auto;
+    }
+    
+    .nav-logo-container {
+        order: 0;
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .nav-menu {
+        order: 1;
+    }
+    
+    .hamburger:hover {
+        background: rgba(30, 79, 255, 0.1);
+    }
+    
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+
+    
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    /* Mobile layout - natural DOM order */
+    .hero-title {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: center;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .hero-image {
+        grid-column: 1;
+        grid-row: 2;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-subtitle {
+        grid-column: 1;
+        grid-row: 3;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-buttons {
+        grid-column: 1;
+        grid-row: 4;
+        text-align: center;
+    }
+    
+    .hero-visual {
+        max-width: 85%;
+        height: auto;
+        margin: 0 auto;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .hero-buttons .btn:active {
+        transform: scale(0.98);
+    }
+    
+    .hero-buttons .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .hero-buttons .btn:hover::before {
+        left: 100%;
+    }
+    
+    .about-content {
+        gap: 2rem;
+    }
+    
+    .about-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .about-portrait {
+        order: -1;
+    }
+    
+    .about-portrait-img {
+        width: 250px;
+        height: 250px;
+    }
+    
+    /* Mobile-specific hero enhancements */
+    .hero {
+        padding-top: 6rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+    
+    .hero-background {
+        opacity: 0.3;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 2.5rem;
+        color: var(--text-secondary);
+    }
+    
+    /* Mobile button enhancements */
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .about-text {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .about-text p {
+        font-size: 1.1rem;
+        text-align: left;
+    }
+    
+    .skills-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .skills-subsection h3 {
+        font-size: 1.2rem;
+    }
+    
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    
+    .project-filters {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+        min-height: 300px;
+    }
+    
+    .project-card {
+        min-height: 350px;
+    }
+    
+    .diplomas-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .diploma-wrapper {
+        min-height: 400px;
+    }
+    
+    .diploma-header {
+        padding: 1rem;
+        gap: 0.75rem;
+        min-height: 70px;
+    }
+    
+    .diploma-header-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .diploma-header-content {
+        min-height: 40px;
+    }
+    
+    .diploma-header-content h3 {
+        font-size: 1rem;
+        min-height: 2rem;
+    }
+    
+    .diploma-header-content p {
+        font-size: 0.85rem;
+    }
+    
+    .diploma-card {
+        max-width: 300px;
+        height: 200px;
+    }
+    
+    .contact-actions {
+        gap: 1rem;
+    }
+    
+    .contact-action {
+        padding: 1rem 1.5rem;
+        min-height: 70px;
+    }
+    
+    .action-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        margin-right: 1rem;
+    }
+    
+    .action-content h3 {
+        font-size: 1.1rem;
+    }
+    
+    .action-content p {
+        font-size: 0.9rem;
+    }
+    
+    /* Gallery mobile styles */
+    .gallery-header {
+        padding: 1rem 1.5rem;
+    }
+    
+    .gallery-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .gallery-main {
+        padding: 60px 0 100px 0;
+    }
+    
+    .gallery-nav {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+    
+    .gallery-prev {
+        left: 1rem;
+    }
+    
+    .gallery-next {
+        right: 1rem;
+    }
+    
+    .gallery-image-container {
+        padding: 0 60px;
+    }
+    
+    .gallery-thumbnails {
+        padding: 1rem 1.5rem;
+    }
+    
+    .gallery-thumbnail {
+        width: 60px;
+        height: 45px;
+    }
+    
+    .gallery-close {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+    
+    /* New sections mobile styles */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+        min-height: 250px;
+    }
+    
+    .service-header {
+        text-align: center;
+    }
+    
+    .service-header h3 {
+        font-size: 1.2rem;
+        line-height: 1.4;
+    }
+    
+    .service-info {
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+    
+    .service-price,
+    .service-duration {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .service-card p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    .process-steps {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .process-step {
+        padding: 1rem;
+        gap: 1rem;
+        border-width: 1px;
+    }
+    
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .faq-question h3 {
+        font-size: 1rem;
+    }
+    
+    .legal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .legal-content h2 {
+        font-size: 1.4rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .footer-links {
+        justify-content: center;
+    }
+    
+    /* Animation adjustments for mobile */
+    .hero-portrait {
+        animation-duration: 0.6s;
+    }
+    
+    .hero-title,
+    .hero-subtitle,
+    .hero-buttons {
+        animation-duration: 0.6s;
+    }
+    
+    .skill-badge.animate {
+        animation-duration: 0.5s;
+    }
+    
+    /* Featured project mobile adjustments */
+    .featured-header h2 {
+        font-size: 2rem;
+    }
+    
+    .featured-header p {
+        font-size: 1rem;
+    }
+    
+    .featured-image-container img {
+        max-width: 95%;
+    }
+    
+    .metric-item {
+        position: relative;
+        margin: 1rem 0;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .metric-label {
+        font-size: 0.9rem;
+    }
+    
+    .metric-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .modal-content {
+        margin: 5% auto;
+        padding: 1.5rem;
+        width: 95%;
+        max-width: 95%;
+    }
+    
+    .about-portrait-img {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .about-text p {
+        font-size: 1rem;
+    }
+    
+    /* Small mobile hero adjustments */
+    .hero-visual {
+        max-width: 90%;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    /* Mobile navigation positioning */
+    .nav-container {
+        position: relative;
+    }
+    
+    .hamburger {
+        position: relative;
+        z-index: 1000;
+    }
+    
+    /* Ensure smooth mobile transitions */
+    .hero-content {
+        transition: all 0.3s ease;
+    }
+    
+    /* Additional mobile hero spacing */
+    .hero {
+        margin-top: 0;
+        padding-top: 6rem;
+    }
+    
+    .hero-content {
+        padding-top: 0;
+    }
+}
+
+/* Medium screen utilities */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .hero-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .hero-title {
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;
+    }
+    
+    .hero-image {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+    }
+    
+    .hero-subtitle {
+        grid-column: 1;
+        grid-row: 2;
+        text-align: left;
+    }
+    
+    .hero-buttons {
+        grid-column: 1;
+        grid-row: 3;
+        text-align: left;
+    }
+}
+
+/* Desktop-specific utilities */
+@media (min-width: 1024px) {
+    .hero-visual {
+        max-width: 90%;
+        border-radius: 25px;
+    }
+    
+    .about-text p {
+        font-size: 1.3rem;
+        line-height: 1.8;
+    }
+    
+    .skills-subsection h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1.8rem;
+    }
+    
+    /* Desktop improvements for service cards */
+    .service-card {
+        min-height: 300px;
+        padding: 2.5rem;
+    }
+    
+    .service-header h3 {
+        font-size: 1.4rem;
+        line-height: 1.3;
+    }
+    
+    .service-info {
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .service-price,
+    .service-duration {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+    }
+    
+    .service-card p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    /* Desktop improvements for process steps */
+    .process-step {
+        padding: 2rem;
+        border-width: 2px;
+    }
+    
+    .process-step:hover {
+        border-color: var(--accent-primary) !important;
+        animation-play-state: paused;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(30, 79, 255, 0.2);
+    }
+    
+    .diploma-wrapper {
+        min-height: 550px;
+    }
+    
+    .diploma-header {
+        min-height: 90px;
+        padding: 2rem;
+    }
+    
+    .diploma-header-content {
+        min-height: 60px;
+    }
+    
+    .diploma-header-content h3 {
+        font-size: 1.2rem;
+        min-height: 2.6rem;
+    }
+    
+    .diploma-header-content p {
+        font-size: 1rem;
+    }
+    
+    .diploma-card {
+        max-width: 520px; /* Slightly larger on desktop */
+        height: 364px;
+    }
+    
+    /* Desktop-specific modal improvements */
+    .modal-slide__text {
+        font-size: 1.4rem; /* Increased by ~30% from 1.1rem */
+        line-height: 1.9; /* Slightly more spacing */
+    }
+    
+    .modal-slide__text-block h3 {
+        font-size: 2.1rem; /* Increased by ~30% from 1.6rem */
+        margin-bottom: 1rem;
+    }
+    
+    .modal-slide__text-block p {
+        font-size: 1.4rem; /* Increased by ~30% from 1.1rem */
+        line-height: 1.9;
+    }
+    
+    /* Desktop-specific list styles */
+    .features-list li,
+    .tech-list li {
+        font-size: 1.4rem; /* Increased by ~30% from 1.1rem */
+        line-height: 1.7; /* Consistent reduced line spacing */
+        margin-bottom: 1rem;
+    }
+    
+    .modal-slide__media {
+        min-height: 70vh; /* Larger minimum height on desktop */
+    }
+    
+    .modal-slide__media img {
+        max-width: 85%; /* Prevent overflow while maintaining good size */
+        max-height: 85vh;
+        object-fit: contain;
+    }
+    
+    /* Project Modal specific typography improvements */
+    #projectModal .modal-slide__text-block h3 {
+        font-size: 2.8rem !important; /* Much larger section titles on desktop */
+        margin-bottom: 1.5rem !important; /* Better spacing under title */
+        font-weight: 700 !important; /* Bolder for more prominence */
+    }
+    
+    #projectModal .modal-slide__text-block p {
+        font-size: 1.4rem; /* Increased by ~30% from 1.1rem */
+        line-height: 1.7; /* Consistent reduced line spacing */
+    }
+    
+    #projectModal .description-text {
+        font-size: 1.4rem; /* Consistent font size on desktop */
+        line-height: 1.7; /* Consistent line spacing */
+    }
+    
+    /* Reduce screenshot size to prevent overflow */
+    #projectModal .modal-slide__media img {
+        max-width: 65%; /* Even smaller for comfortable fit */
+        max-height: 65vh; /* Reduced height to ensure fit */
+        object-fit: contain;
+    }
+}
+
+/* Responsive for modal slides */
+@media (max-width: 768px) {
+    .modal-slide {
+        flex-direction: column; /* Stack image and text vertically */
+        padding: 2rem 1rem;
+        min-height: auto; /* Allow height to adjust */
+        height: auto;
+    }
+
+    .modal-slide__media {
+        max-height: 60vh; /* Adjust max height for mobile images */
+        min-height: 40vh;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-slide__text {
+        max-height: none; /* Allow text to take full height */
+        overflow-y: visible;
+    }
+
+    .modal-slide__text-block h3 {
+        font-size: 1.3rem;
+    }
+
+    .modal-slide__text-block p {
+        font-size: 0.9rem;
+    }
+    
+    /* Legal pages responsive */
+    .legal-pages-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+    
+    .legal-content {
+        padding: 1.5rem;
+        font-size: 0.85rem;
+        max-height: none;
+    }
+    
+    .story-modal__grid { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .story-pair { 
+        grid-template-columns: 1fr; 
+        gap: 1rem; 
+    }
+}
+
+/* Responsive styles for legal pages */
+@media (max-width: 768px) {
+    .legal-page {
+        padding: 6rem 0 2rem 0;
+    }
+    
+    .legal-content {
+        padding: 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .legal-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .legal-content h3 {
+        font-size: 1.1rem;
+        margin: 1.5rem 0 0.75rem 0;
+    }
+    
+    .legal-content p {
+        margin-bottom: 1rem;
+    }
+    
+    .legal-content ul {
+        margin: 0.75rem 0 1rem 0;
+        padding-left: 1rem;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+}
+
+/* Slides container inside project modal */
+#projectModalContent .project-slides {
+    height: calc(90vh - 80px); /* account for header/close */
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    padding-right: 0.5rem;
+}
+
+#projectModalContent .modal-slide {
+    min-height: calc(90vh - 80px);
+}
+
+/* Single-layer glass effect for project modal */
+#projectModal {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+/* Project Modal specific typography improvements */
+#projectModal .modal-slide__text-block {
+    margin-bottom: 2.5rem; /* Increased spacing between text blocks */
+}
+
+#projectModal .modal-slide__text-block:last-child {
+    margin-bottom: 0;
+}
+
+#projectModal .modal-slide__text-block h3 {
+    color: var(--accent-primary) !important; /* Ensure this takes precedence */
+    font-size: 2.2rem !important; /* Larger section titles */
+    margin-bottom: 1.2rem !important; /* Better spacing under title */
+    font-weight: 700 !important; /* Bolder for more prominence */
+}
+
+#projectModal .modal-slide__text-block p {
+    color: rgba(255, 255, 255, 0.9); /* Softer white */
+    line-height: 1.7; /* Reduced line spacing for cleaner look */
+    font-size: 1.1rem; /* Increased from 1rem */
+}
+
+/* Description text styling to match features */
+#projectModal .description-text {
+    color: #FFFFFF; /* Pure white to match features */
+    line-height: 1.7; /* Consistent line spacing */
+    font-size: 1.1rem; /* Consistent font size */
+}
+
+/* New list styles for features and tech */
+.features-list,
+.tech-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.features-list li,
+.tech-list li {
+    color: #FFFFFF; /* Pure white to match description */
+    line-height: 1.7; /* Reduced line spacing for cleaner look */
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.features-list li::before,
+.tech-list li::before {
+    content: '•';
+    color: var(--accent-primary);
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.features-list li:last-child,
+.tech-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Modal Content (glass) */
+.modal-content {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    margin: 3% auto;
+    padding: 1.5rem;
+    width: 95%;
+    max-width: 1100px;
+    max-height: 90vh;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+    overflow: hidden; /* slides scroll inside */
+}
+
+.project-slides {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    scroll-snap-type: y mandatory; /* Enable scroll snapping */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.modal-slide {
+    flex-shrink: 0; /* Prevent shrinking */
+    width: 100%;
+    min-height: 100vh; /* Each slide takes full viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start; /* Snap to the start of the slide */
+    padding: 4rem 2rem; /* Padding for content inside slide */
+    gap: 2rem;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal-slide__text-block {
+    margin-bottom: 2rem;
+}
+
+.modal-slide__text-block:last-child {
+    margin-bottom: 0;
+}
+
+/* Legal text utility */
+.legal-text {
+    margin-bottom: 2rem;
+}
+
+.legal-content .btn {
+    margin-top: 1rem;
+}
+
+
