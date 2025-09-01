@@ -147,7 +147,7 @@ function initializeNavigation() {
     const navMenu = document.getElementById('navMenu');
     
     navMenu.innerHTML = window.SITE.navigation.map((nav, index) => 
-        `<li class="mobile-nav-item" style="animation-delay: ${(index + 1) * 0.1}s"><a href="#${nav.id}" class="nav-link">${nav.text}</a></li>`
+        `<li class="nav-item" data-index="${index}"><a href="#${nav.id}" class="nav-link">${nav.text}</a></li>`
     ).join('');
 }
 

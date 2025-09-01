@@ -120,6 +120,31 @@
     }
 }
 
+/* Navigation Item Base Styles */
+.nav-item {
+    /* Base styles for all navigation items */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Desktop Navigation - No Initial Animation */
+@media (min-width: 769px) {
+    .nav-item {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .nav-item .nav-link {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+        animation: none !important;
+        transition: color 0.3s ease !important;
+    }
+}
+
 /* Mobile Navigation Animations */
 @keyframes mobileNavSlideIn {
     from {
@@ -132,16 +157,21 @@
     }
 }
 
-.mobile-nav-item {
-    animation: mobileNavSlideIn 0.4s ease forwards;
+/* Mobile-specific navigation animations */
+@media (max-width: 768px) {
+    .nav-item {
+        animation: mobileNavSlideIn 0.4s ease forwards;
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    
+    .nav-item:nth-child(1) { animation-delay: 0.1s; }
+    .nav-item:nth-child(2) { animation-delay: 0.2s; }
+    .nav-item:nth-child(3) { animation-delay: 0.3s; }
+    .nav-item:nth-child(4) { animation-delay: 0.4s; }
+    .nav-item:nth-child(5) { animation-delay: 0.5s; }
+    .nav-item:nth-child(6) { animation-delay: 0.6s; }
 }
-
-.mobile-nav-item:nth-child(1) { animation-delay: 0.1s; }
-.mobile-nav-item:nth-child(2) { animation-delay: 0.2s; }
-.mobile-nav-item:nth-child(3) { animation-delay: 0.3s; }
-.mobile-nav-item:nth-child(4) { animation-delay: 0.4s; }
-.mobile-nav-item:nth-child(5) { animation-delay: 0.5s; }
-.mobile-nav-item:nth-child(6) { animation-delay: 0.6s; }
 
 /* Scroll Indicator Animation */
 @keyframes bounce {
