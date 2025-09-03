@@ -1,0 +1,19 @@
+{
+  "name": "alexmatkava-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website migrated to Astro",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": ["portfolio", "astro", "web-development"],
+  "author": "Aleksandr Matkava",
+  "license": "ISC",
+  "dependencies": {
+    "astro": "^4.0.0"
+  }
+}
