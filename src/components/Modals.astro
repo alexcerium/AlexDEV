@@ -1,0 +1,41 @@
+---
+// Modals component for project modal and gallery modal
+---
+
+<!-- Project Modal -->
+<div id="projectModal" class="modal" aria-modal="true" role="dialog">
+    <div class="modal-content" id="projectModalContent" role="document">
+        <span class="close" aria-label="Close">&times;</span>
+        <!-- Project slides and header will be injected here directly -->
+    </div>
+</div>
+
+<!-- Image Gallery Modal -->
+<div id="galleryModal" class="modal gallery-modal">
+    <div class="gallery-container">
+        <span class="close gallery-close">&times;</span>
+        <div class="gallery-header">
+            <h3 id="galleryTitle"></h3>
+            <div class="gallery-counter">
+                <span id="currentImage">1</span> / <span id="totalImages">3</span>
+            </div>
+        </div>
+        <div class="gallery-main">
+            <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="gallery-image-container">
+                <img id="galleryImage" src="" alt="">
+            </div>
+            <button class="gallery-nav gallery-next" onclick="changeImage(1)">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+        <div class="gallery-thumbnails" id="galleryThumbnails">
+            <!-- Thumbnails will be populated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<!-- Grain Overlay -->
+<div class="grain-overlay"></div>

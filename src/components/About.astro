@@ -1,0 +1,39 @@
+---
+// About section component
+---
+
+<section id="about" class="about">
+    <div class="container">
+        <h2 class="section-title" id="aboutTitle"></h2>
+        <div class="about-content">
+            <div class="about-main">
+                <div class="about-portrait">
+                    <img src="" alt="" class="about-portrait-img" id="aboutPortrait">
+                    <div class="about-portrait-button">
+                        <button class="btn btn-primary" onclick="downloadResume()">
+                            <span id="downloadResumeButtonText"></span>
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <p id="aboutDescription"></p>
+                </div>
+            </div>
+            <div class="skills-container">
+                <div class="skills-subsection">
+                    <h3 id="skillsTitle"></h3>
+                    <div class="skills-grid" id="skillsGrid">
+                        <!-- Skills will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div class="skills-subsection">
+                    <h3 id="skillsExtendedTitle"></h3>
+                    <div class="skills-grid" id="skillsExtendedGrid">
+                        <!-- Extended skills will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
