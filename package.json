@@ -6,15 +6,24 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "NODE_ENV=production astro build",
     "build:custom": "node scripts/build.js",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "npm run build && gh-pages -d dist",
+    "deploy:preview": "npm run build && astro preview"
   },
-  "keywords": ["portfolio", "astro", "web-development"],
+  "keywords": [
+    "portfolio",
+    "astro",
+    "web-development"
+  ],
   "author": "Aleksandr Matkava",
   "license": "ISC",
   "dependencies": {
     "astro": "^4.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }

@@ -6,7 +6,7 @@
 
 /* Hero Typography */
 .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
     font-weight: 700;
     margin-bottom: 1.5rem;
     line-height: 1.1;
@@ -17,13 +17,7 @@
     background-clip: text;
 }
 
-.hero-subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.3rem);
-    color: var(--text-secondary);
-    margin-bottom: 2.5rem;
-    font-weight: 400;
-    max-width: 85%;
-}
+
 
 /* About Section Typography */
 .about-text p {

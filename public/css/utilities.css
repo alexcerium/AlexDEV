@@ -124,7 +124,21 @@
         text-align: left;
     }
     
-    /* Mobile layout - natural DOM order */
+    /* Mobile layout - reordered: title, photo, bullets+buttons */
+    .hero-left {
+        grid-column: 1;
+        grid-row: 3;
+        text-align: left;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-right {
+        grid-column: 1;
+        grid-row: 2;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
     .hero-title {
         grid-column: 1;
         grid-row: 1;
@@ -133,24 +147,18 @@
         margin-top: 1rem;
     }
     
-    .hero-image {
-        grid-column: 1;
-        grid-row: 2;
-        margin-bottom: 2rem;
-        text-align: center;
+    .hero-bullet-list {
+        margin: 1.5rem 0;
     }
     
-    .hero-subtitle {
-        grid-column: 1;
-        grid-row: 3;
-        text-align: left;
-        margin-bottom: 2rem;
+    .hero-bullet-list li {
+        font-size: 1rem;
+        padding-left: 1.5rem;
     }
     
     .hero-buttons {
-        grid-column: 1;
-        grid-row: 4;
         text-align: left;
+        margin-top: 1rem;
     }
     
     .hero-visual {
@@ -236,12 +244,7 @@
         font-weight: 800;
     }
     
-    .hero-subtitle {
-        font-size: 1.1rem;
-        line-height: 1.5;
-        margin-bottom: 2.5rem;
-        color: var(--text-secondary);
-    }
+
     
     /* Mobile button enhancements */
     .hero-buttons {
@@ -487,7 +490,6 @@
     }
     
     .hero-title,
-    .hero-subtitle,
     .hero-buttons {
         animation-duration: 0.6s;
     }
@@ -536,10 +538,6 @@
         font-size: 2rem;
     }
     
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    
     .section-title {
         font-size: 1.75rem;
     }
@@ -573,10 +571,6 @@
     .hero-title {
         font-size: 2.5rem;
         font-weight: 800;
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem;
     }
     
     /* Mobile navigation positioning */
@@ -618,21 +612,25 @@
         text-align: left;
     }
     
-    .hero-image {
-        grid-column: 2;
-        grid-row: 1 / span 3;
-    }
-    
-    .hero-subtitle {
+    .hero-left {
         grid-column: 1;
         grid-row: 2;
         text-align: left;
     }
     
+    .hero-right {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        text-align: center;
+    }
+    
+    .hero-bullet-list {
+        margin: 1.5rem 0;
+    }
+    
     .hero-buttons {
-        grid-column: 1;
-        grid-row: 3;
         text-align: left;
+        margin-top: 1rem;
     }
 }
 

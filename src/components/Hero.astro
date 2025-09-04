@@ -7,19 +7,23 @@
     <div class="container">
         <div class="hero-content">
             <h1 class="hero-title" id="heroTitle"></h1>
-            <div class="hero-image">
-                <img src="" alt="Hero Visual" class="hero-visual" id="heroImage">
+            <div class="hero-left">
+                <ul class="hero-bullet-list" id="heroBulletList"></ul>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary magnetic" onclick="scrollToProjects()">
+                        <span id="downloadResumeText"></span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
+                        <span id="contactMeText"></span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
             </div>
-            <p class="hero-subtitle" id="heroSubtitle"></p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary magnetic" onclick="scrollToProjects()">
-                    <span id="downloadResumeText"></span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-                <button class="btn btn-secondary magnetic" onclick="scrollToContact()">
-                    <span id="contactMeText"></span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
+            <div class="hero-right">
+                <div class="hero-image">
+                    <img src="" alt="Hero Visual" class="hero-visual" id="heroImage">
+                </div>
             </div>
         </div>
     </div>

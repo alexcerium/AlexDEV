@@ -154,11 +154,15 @@ function initializeNavigation() {
 // Hero Section Initialization
 function initializeHero() {
     const heroTitle = document.getElementById('heroTitle');
-    const heroSubtitle = document.getElementById('heroSubtitle');
+    const heroBulletList = document.getElementById('heroBulletList');
     const heroImage = document.getElementById('heroImage');
     
     if (heroTitle) heroTitle.textContent = window.SITE.hero.title;
-    if (heroSubtitle) heroSubtitle.textContent = window.SITE.hero.subtitle;
+    if (heroBulletList) {
+        heroBulletList.innerHTML = window.SITE.hero.bulletPoints.map(point => 
+            `<li>${point}</li>`
+        ).join('');
+    }
     if (heroImage) {
         heroImage.src = window.SITE.hero.heroImage;
         heroImage.alt = window.SITE.hero.title;
