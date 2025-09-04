@@ -16,13 +16,16 @@ const { title = "", description = "", keywords = "", author = "" } = Astro.props
     <meta name="keywords" content={keywords} id="metaKeywords">
     <meta name="author" content={author} id="metaAuthor">
     <title id="pageTitle">{title}</title>
-    <link rel="stylesheet" href="/css/tokens.css">
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/typography.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/utilities.css">
-    <link rel="stylesheet" href="/css/animations.css">
+    
+    <!-- Import CSS files with correct base path -->
+    <link rel="stylesheet" href="/AlexDEV/css/tokens.css">
+    <link rel="stylesheet" href="/AlexDEV/css/base.css">
+    <link rel="stylesheet" href="/AlexDEV/css/layout.css">
+    <link rel="stylesheet" href="/AlexDEV/css/typography.css">
+    <link rel="stylesheet" href="/AlexDEV/css/components.css">
+    <link rel="stylesheet" href="/AlexDEV/css/utilities.css">
+    <link rel="stylesheet" href="/AlexDEV/css/animations.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
