@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeMagneticEffects();
     initializeScrollReveal();
     initializeGallery();
+    initializeLazyLoading();
     
     // Initialize animations
     initializeDiplomaAnimations();
@@ -166,6 +167,7 @@ function initializeHero() {
     if (heroImage) {
         heroImage.src = window.SITE.hero.heroImage;
         heroImage.alt = window.SITE.hero.title;
+        heroImage.loading = 'lazy';
         
         // Add floating animation after initial animation completes
         heroImage.addEventListener('animationend', function() {
@@ -203,6 +205,7 @@ function initializeAbout() {
     if (aboutPortrait) {
         aboutPortrait.src = window.SITE.about.portrait;
         aboutPortrait.alt = window.SITE.hero.title;
+        aboutPortrait.loading = 'lazy';
     }
     
     if (skillsGrid) {
@@ -330,10 +333,10 @@ function initializeEducation() {
                 <div class="diploma-card" onclick="flipDiploma(this)">
                     <div class="diploma-inner">
                         <div class="diploma-front">
-                            <img src="${education.images[0]}" alt="${education.title} - лицевая сторона">
+                            <img src="${education.images[0]}" alt="${education.title} - лицевая сторона" loading="lazy">
                         </div>
                         <div class="diploma-back">
-                            <img src="${education.images[1]}" alt="${education.title} - обратная сторона">
+                            <img src="${education.images[1]}" alt="${education.title} - обратная сторона" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -466,6 +469,7 @@ function initializeFeaturedProject() {
     if (featuredImage) {
         featuredImage.src = window.SITE.featured.image;
         featuredImage.alt = window.SITE.featured.imageAlt;
+        featuredImage.loading = 'lazy';
     }
     if (featuredCtaText) featuredCtaText.textContent = window.SITE.featured.ctaText;
     
@@ -853,6 +857,8 @@ function updateGalleryImage() {
         const img = new Image();
         img.onload = function() {
             image.src = currentGalleryImages[currentImageIndex];
+            image.loading = 'eager';
+            image.classList.add('loaded');
             container.classList.remove('loading');
             setTimeout(() => {
                 image.style.opacity = '1';
@@ -978,7 +984,7 @@ function openProjectModal(projectId) {
 		return `
 			<section class="modal-slide" data-slide-index="${idx}">
 				<div class="modal-slide__media">
-					<img src="${src}" alt="${project.name} — экран ${idx + 1}" onclick="openGallery(${JSON.stringify(screenshots)}, '${project.name}')">
+					<img src="${src}" alt="${project.name} — экран ${idx + 1}" loading="eager" onclick="openGallery(${JSON.stringify(screenshots)}, '${project.name}')">
                 </div>
 				<div class="modal-slide__text">
 					<div class="story-textblock">
@@ -999,6 +1005,9 @@ function openProjectModal(projectId) {
 		</header>
 		<div class="project-slides" id="projectSlides">${slidesHtml}</div>
 	`;
+
+	// Initialize lazy loading for dynamically created modal images
+	initializeModalLazyLoading();
 
 	// Rebind close listeners for the new close element
 	shell.querySelector('.close').addEventListener('click', () => { 
@@ -1392,6 +1401,76 @@ function initializeProcessAnimations() {
     if (processSection) {
         processObserver.observe(processSection);
     }
+}
+
+// Lazy Loading Initialization
+function initializeLazyLoading() {
+    // Handle lazy loading for all images
+    const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+    
+    // Add load event listeners to existing lazy images
+    lazyImages.forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+            img.addEventListener('error', function() {
+                this.classList.add('loaded'); // Still show the image even if it fails to load
+            });
+        }
+    });
+    
+    // Use Intersection Observer for better performance
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.complete) {
+                        img.classList.add('loaded');
+                    } else {
+                        img.addEventListener('load', function() {
+                            this.classList.add('loaded');
+                        });
+                        img.addEventListener('error', function() {
+                            this.classList.add('loaded');
+                        });
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px', // Start loading 50px before the image comes into view
+            threshold: 0.01
+        });
+        
+        // Observe all lazy images
+        lazyImages.forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+}
+
+// Modal Lazy Loading Initialization
+function initializeModalLazyLoading() {
+    // Handle loading for dynamically created modal images
+    const modalImages = document.querySelectorAll('#projectModal img');
+    
+    modalImages.forEach(img => {
+        // Add load event listener for smooth transitions
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+            img.addEventListener('error', function() {
+                this.classList.add('loaded'); // Still show the image even if it fails to load
+            });
+        }
+    });
 }
 
 
