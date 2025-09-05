@@ -7,6 +7,9 @@ export interface Props {
 }
 
 const { title = "", description = "", keywords = "", author = "" } = Astro.props;
+
+// Get base path for assets
+const basePath = import.meta.env.PROD ? '/AlexDEV' : '';
 ---
 
 <head>
@@ -18,13 +21,13 @@ const { title = "", description = "", keywords = "", author = "" } = Astro.props
     <title id="pageTitle">{title}</title>
     
     <!-- Import CSS files with correct base path -->
-    <link rel="stylesheet" href="/AlexDEV/css/tokens.css">
-    <link rel="stylesheet" href="/AlexDEV/css/base.css">
-    <link rel="stylesheet" href="/AlexDEV/css/layout.css">
-    <link rel="stylesheet" href="/AlexDEV/css/typography.css">
-    <link rel="stylesheet" href="/AlexDEV/css/components.css">
-    <link rel="stylesheet" href="/AlexDEV/css/utilities.css">
-    <link rel="stylesheet" href="/AlexDEV/css/animations.css">
+    <link rel="stylesheet" href={`${basePath}/css/tokens.css`}>
+    <link rel="stylesheet" href={`${basePath}/css/base.css`}>
+    <link rel="stylesheet" href={`${basePath}/css/layout.css`}>
+    <link rel="stylesheet" href={`${basePath}/css/typography.css`}>
+    <link rel="stylesheet" href={`${basePath}/css/components.css`}>
+    <link rel="stylesheet" href={`${basePath}/css/utilities.css`}>
+    <link rel="stylesheet" href={`${basePath}/css/animations.css`}>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

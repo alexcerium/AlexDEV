@@ -1,4 +1,18 @@
 // Site Data Configuration
+
+// Function to get the correct base path for assets
+function getBasePath() {
+    // Check if we're in production (GitHub Pages)
+    if (window.location.hostname === 'alexcerium.github.io') {
+        return '/AlexDEV';
+    }
+    // For local development
+    return '';
+}
+
+// Get base path
+const basePath = getBasePath();
+
 window.SITE = {
     // Site Meta
     meta: {
@@ -33,13 +47,13 @@ window.SITE = {
             "iOS приложения для бизнеса: меню, каталог, лояльность",
             "Быстрый запуск и поддержка"
         ],
-        heroImage: "assets/Hero.png"
+        heroImage: `${basePath}/assets/Hero.png`
     },
 
     // About Section
     about: {
         description: "Меня зовут Александр Маткава. Я создаю iOS-приложения и сайты, уделяя внимание каждой детали. Мне близка идея, что просто — значит гениально, ведь сделать сложное легко, а простое требует настоящего мастерства. Мой путь начался с высшего образования в сфере фармации, где я научился точности, системному мышлению и работе с ответственными задачами. Сегодня эти качества помогают мне разрабатывать цифровые решения, которые работают безупречно и выглядят гармонично.",
-        portrait: "assets/Portrait.jpeg"
+        portrait: `${basePath}/assets/Portrait.jpeg`
     },
 
     // Skills Section
@@ -82,7 +96,7 @@ window.SITE = {
             organization: "Skillfactory, Москва", 
             year: "2025",
             icon: "fas fa-code",
-            images: ["assets/IT-1.jpg", "assets/IT-2.jpg"]
+            images: [`${basePath}/assets/IT-1.jpg`, `${basePath}/assets/IT-2.jpg`]
         },
         {
             id: "pharmacy", 
@@ -90,7 +104,7 @@ window.SITE = {
             organization: "Волг ГМУ, Волгоград",
             year: "2025",
             icon: "fas fa-graduation-cap",
-            images: ["assets/Pharm-1.jpg", "assets/Pharm-2.jpg"]
+            images: [`${basePath}/assets/Pharm-1.jpg`, `${basePath}/assets/Pharm-2.jpg`]
         }
     ],
 
@@ -100,11 +114,11 @@ window.SITE = {
             id: "coffeedaily",
             name: "CoffeeDaily",
             category: ["ios-apps"],
-            preview: "assets/coffeedaily-preview.png",
+            preview: `${basePath}/assets/coffeedaily-preview.png`,
             screenshots: [
-                "assets/coffeedaily-1.png",
-                "assets/coffeedaily-2.png",
-                "assets/coffeedaily-3.png"
+                `${basePath}/assets/coffeedaily-1.png`,
+                `${basePath}/assets/coffeedaily-2.png`,
+                `${basePath}/assets/coffeedaily-3.png`
             ],
             description: "Задача была сделать заказ кофе максимально простым. Я предложил решение: удобное меню с фото, выбор размера, корзина, карта филиалов и акции на главном экране. Мы доработали каждую деталь под стиль бренда. Результат — приложение, которое любят клиенты и которое работает на продажи.",
             features: [
@@ -128,11 +142,11 @@ window.SITE = {
             id: "boopa",
             name: "Boopa",
             category: ["ios-apps"],
-            preview: "assets/boopa-preview.png",
+            preview: `${basePath}/assets/boopa-preview.png`,
             screenshots: [
-                "assets/boopa-1.png",
-                "assets/boopa-2.png",
-                "assets/boopa-3.png"
+                `${basePath}/assets/boopa-1.png`,
+                `${basePath}/assets/boopa-2.png`,
+                `${basePath}/assets/boopa-3.png`
             ],
             description: "Мы создали прототип приложения для обмена фото, видео и историями между любителями кулинарии и путешествий. Простой интерфейс, лента, истории, поиск и профили пользователей — всё для тестирования идеи и сбора обратной связи перед запуском.",
             features: [
@@ -157,11 +171,11 @@ window.SITE = {
             id: "testgenius",
             name: "TestGenius",
             category: ["ios-apps"],
-            preview: "assets/testgenius-preview.png",
+            preview: `${basePath}/assets/testgenius-preview.png`,
             screenshots: [
-                "assets/testgenius-1.png",
-                "assets/testgenius-2.png",
-                "assets/testgenius-3.png"
+                `${basePath}/assets/testgenius-1.png`,
+                `${basePath}/assets/testgenius-2.png`,
+                `${basePath}/assets/testgenius-3.png`
             ],
             description: "Приложение создавалось для учебных центров, компаний и индивидуальных экспертов. Пользователи могут быстро проходить тесты из PDF, видеть результат сразу и отслеживать прогресс. Минималистичный дизайн, таймер, выделение правильных и неправильных ответов — всё, чтобы обучение было эффективным и наглядным.",
             features: [
@@ -186,11 +200,11 @@ window.SITE = {
             id: "moviemate",
             name: "MovieMate",
             category: ["ios-apps"],
-            preview: "assets/moviemate-preview.png",
+            preview: `${basePath}/assets/moviemate-preview.png`,
             screenshots: [
-                "assets/moviemate-1.png",
-                "assets/moviemate-2.png",
-                "assets/moviemate-3.png"
+                `${basePath}/assets/moviemate-1.png`,
+                `${basePath}/assets/moviemate-2.png`,
+                `${basePath}/assets/moviemate-3.png`
             ],
             description: "Интуитивный поиск, яркие карточки фильмов и визуально чистый дизайн. Каждая деталь интерфейса создана, чтобы выбор фильма был таким же приятным, как его просмотр.",
             features: [
@@ -213,11 +227,11 @@ window.SITE = {
             id: "smm-promo",
             name: "OlesyaSMM",
             category: ["websites"],
-            preview: "assets/smm-promo-preview.png",
+            preview: `${basePath}/assets/smm-promo-preview.png`,
             screenshots: [
-                "assets/smm-promo-1.png",
-                "assets/smm-promo-2.png",
-                "assets/smm-promo-3.png"
+                `${basePath}/assets/smm-promo-1.png`,
+                `${basePath}/assets/smm-promo-2.png`,
+                `${basePath}/assets/smm-promo-3.png`
             ],
             description: "OlesyaSMM — лендинг-решение для персонального бренда в сфере SMM-продвижения. Разработан как инструмент захвата внимания и перевода трафика в заявки. Проект сфокусирован на сильной подаче услуг, верификации экспертизы и стимулировании контакта с клиентом.",
             features: [
@@ -241,7 +255,7 @@ window.SITE = {
     featured: {
         title: "CoffeeDaily",
         subtitle: "Флагман-кейс: Приложение для кофейни",
-        image: "assets/coffeedaily-preview.png",
+        image: `${basePath}/assets/coffeedaily-preview.png`,
         imageAlt: "CoffeeDaily App",
         ctaText: "Подробнее"
     },

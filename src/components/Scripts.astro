@@ -1,6 +1,9 @@
 ---
 // Scripts component for all JavaScript files
+
+// Get base path for assets
+const basePath = import.meta.env.PROD ? '/AlexDEV' : '';
 ---
 
-<script src="/AlexDEV/data.js" is:inline></script>
-<script src="/AlexDEV/script.js" is:inline></script>
+<script src={`${basePath}/data.js`} is:inline></script>
+<script src={`${basePath}/script.js`} is:inline></script>

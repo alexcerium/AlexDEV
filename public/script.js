@@ -905,7 +905,9 @@ function changeImage(direction) {
 function downloadResume() {
     // Download the actual PDF file
     const link = document.createElement('a');
-    link.href = 'assets/AlexMatkava.pdf';
+    // Get base path for assets
+    const basePath = window.location.hostname === 'alexcerium.github.io' ? '/AlexDEV' : '';
+    link.href = `${basePath}/assets/AlexMatkava.pdf`;
     link.download = 'AlexMatkava.pdf';
     link.click();
     
